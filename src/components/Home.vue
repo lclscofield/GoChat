@@ -9,3 +9,9 @@
         name: 'Home'
     }
 </script>
+
+<style lang="scss" scoped>
+    #home {
+      height: 100%;
+    }
+</style>
