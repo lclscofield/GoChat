@@ -1,42 +1,43 @@
 * {
     margin: 0;
     padding: 0;
-  }
-  
-  *,
-  *::before,
-  *::after {
+}
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-  }
-  
-  ul,
-  ol {
+}
+
+ul,
+ol {
     list-style: none;
-  }
-  
-  a {
+}
+
+a {
     text-decoration: none;
     color: inherit;
-  }
-  
-  body {
+}
+
+body {
     font-family: -apple-system, "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
     font-size: 14px;
     background: url('//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2zrdI1g.jpg') no-repeat 50%;
     background-size: cover;
-  }
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+}
 
-  html,
-  body{
-      height: 100%;
-  }
-  
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+html,
+body {
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: normal;
-  }
-  
+}
