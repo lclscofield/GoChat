@@ -7,17 +7,17 @@
                   action=""
                   method="post">
                 <div>
-                    <label for="UserName">UserName:</label>
+                    <label for="username">UserName:</label>
                     <input type="text"
-                           name="UserName"
+                           name="username"
                            autocomplete="off"
                            required
                            placeholder="6-12位数字、字母混合">
                 </div>
                 <div>
-                    <label for="Password">Password:</label>
-                    <input type="Password"
-                           name="Password"
+                    <label for="password">Password:</label>
+                    <input type="password"
+                           name="password"
                            required
                            placeholder="6-12位数字、字母混合">
                 </div>
@@ -59,7 +59,7 @@
         margin-left: -190px;
         margin-top: -270px;
         border-radius: 4px;
-        background-color: #e1f1e9;
+        background-color: #9bc9e5;
         width: 380px;
         height: 540px;
         box-shadow: 0 2px 10px #999;
@@ -67,7 +67,7 @@
         > .login-logo {
           font-size: 50px;
           font-family: "Playball", cursive;
-          color: #31cb7c;
+          color: #1987ca;
           text-align: center;
           text-shadow: #aaa 1px 0 10px;
           padding: 40px 0 16px;
@@ -98,7 +98,7 @@
               background: #e1f1e9;
               border: 1px solid #aaa;
               box-shadow: 0px 0px 3px #ccc;
-              border-radius: 2px;
+              border-radius: 4px;
             }
 
             > input:focus {
@@ -125,7 +125,7 @@
 
             button:first-child {
               padding: 8px 16px;
-              background: #aef3cf;
+              background: #33aaf3;
               font-size: 16px;
               border: 1px solid #aaa;
               border-radius: 8px;
@@ -136,8 +136,8 @@
             }
 
             button:last-child {
-              background: #e1f1e9;
-              color: #3da36f;
+              background: #9bc9e5;
+              color: #1987ca;
               padding: 0 10px;
             }
           }
