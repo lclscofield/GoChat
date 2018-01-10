@@ -95,9 +95,10 @@
               height: 32px;
               width: 100%;
               padding: 8px 8px;
-              background: #e1f1e9;
+              font-size: 15px;
+              background: #d5e6f0;
               border: 1px solid #aaa;
-              box-shadow: 0px 0px 3px #ccc;
+              box-shadow: 0px 0px 3px #555;
               border-radius: 4px;
             }
 
@@ -124,14 +125,19 @@
               border: 0;
               cursor: pointer;
               padding: 4px 16px;
-              background: #53b4ef;
+              background: #73c0ef;
               font-size: 16px;
-              border: 1px solid rgb(51, 106, 179);
+              border: 1px solid #1987ca;
               border-radius: 8px;
             }
 
             > button:hover {
               opacity: 0.7;
+            }
+
+            button:first-child {
+              background: #9bc9e5;
+              color: #1987ca;
             }
           }
         }
