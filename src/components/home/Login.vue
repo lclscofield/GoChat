@@ -22,10 +22,10 @@
                            placeholder="6-12位数字、字母混合">
                 </div>
                 <div>
-                    <button class="login"
-                            name="login">登录</button>
                     <button class="register"
-                            name="register">注册 >></button>
+                            name="register">注 册</button>
+                    <button class="login"
+                            name="login">登 录</button>
                 </div>
             </form>
         </div>
@@ -117,28 +117,21 @@
 
           div:last-child {
             padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
 
             > button {
               border: 0;
               cursor: pointer;
-            }
-
-            button:first-child {
-              padding: 8px 16px;
-              background: #33aaf3;
+              padding: 4px 16px;
+              background: #53b4ef;
               font-size: 16px;
-              border: 1px solid #aaa;
+              border: 1px solid rgb(51, 106, 179);
               border-radius: 8px;
             }
 
-            button:first-child:hover {
+            > button:hover {
               opacity: 0.7;
-            }
-
-            button:last-child {
-              background: #9bc9e5;
-              color: #1987ca;
-              padding: 0 10px;
             }
           }
         }
