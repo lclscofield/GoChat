@@ -5,27 +5,34 @@
             <div class="login-title">用心沟通你我</div>
             <form class="login-form"
                   action=""
-                  method="post">
+                  method="post"
+                  @submit.prevent>
                 <div>
                     <label for="username">UserName:</label>
                     <input type="text"
                            name="username"
+                           class="valid"
                            autocomplete="off"
-                           required
-                           placeholder="6-12位数字、字母混合">
+                           :value="inputUserName"
+                           @compositionstart="switchLock(true)"
+                           @compositionend="switchLock(false, $event)"
+                           @input="formatValue($event)"
+                           placeholder="大小写字母、汉字、数字、下划线">
                 </div>
                 <div>
                     <label for="password">Password:</label>
                     <input type="password"
                            name="password"
-                           required
-                           placeholder="6-12位数字、字母混合">
+                           :value="inputPassword"
+                           @compositionstart="switchLock(true)"
+                           @compositionend="switchLock(false, $event)"
+                           @input="formatValue($event)"
+                           placeholder="8-14位数字、字母混合">
                 </div>
                 <div>
-                    <button class="register"
-                            name="register">注 册</button>
+                    <button class="register">注 册</button>
                     <button class="login"
-                            name="login">登 录</button>
+                            @click="login">登 录</button>
                 </div>
             </form>
         </div>
@@ -36,7 +43,57 @@
     export default {
         name: 'Login',
         data () {
-            return {}
+            return {
+                inputUserName: '',
+                inputPassword: '',
+                lock: false
+            }
+        },
+        methods: {
+            switchLock (bool, event) {
+                // 为非直接文字输入加上开关
+                this.lock = bool
+                if (!this.lock) {
+                    this.formatValue(event)
+                }
+            },
+            formatValue (event) {
+                // 判断是否是非直接文字输入，是则不过滤
+                if (this.lock) { return }
+                // 判断是用户名还是密码框
+                let formattedValue
+                let len = 0
+                if (event.target.name === 'username') {
+                    // 过滤用户名输入，只能输入大小写字母、汉字、数字、下划线
+                    formattedValue = event.target.value.replace(/[^a-zA-Z_0-9\u4e00-\u9fa5]/g, '')
+                    // 限定输入 14 个字符，一个汉字为两个字符
+                    for (let i = 0; i < formattedValue.length; i++) {
+                        /[\u4e00-\u9fa5]/.test(formattedValue[i]) ? (len = len + 2) : len++
+                        if (len > 14) {
+                            formattedValue = formattedValue.slice(0, i)
+                            break
+                        }
+                    }
+                } else {
+                    // 过滤密码输入，只能输入字母、数字混合
+                    formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
+                    // 限定输入 8-14 个字符
+                    for (let i = 0; i < formattedValue.length; i++) {
+                        len++
+                        event.target.classList.remove('valid')
+                        if (len > 14) {
+                            formattedValue = formattedValue.slice(0, i)
+                            break
+                        } else if (len >= 8) {
+                            event.target.classList.add('valid')
+                        }
+                    }
+                }
+                event.target.value = formattedValue
+            },
+            login (event) {
+                console.log(event.target)
+            }
         }
     }
 </script>
@@ -107,12 +164,12 @@
               box-shadow: 0 0 3px #aaa;
             }
 
-            > input:focus:valid {
-              border-color: #28921f;
+            > input:focus {
+              border-color: #b03535;
             }
 
-            > input:focus:invalid {
-              border-color: #b03535;
+            > input.valid:focus {
+              border-color: #28921f;
             }
           }
 
