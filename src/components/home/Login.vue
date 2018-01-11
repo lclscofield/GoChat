@@ -78,10 +78,10 @@
                 } else {
                     // 过滤密码输入，只能输入字母、数字混合
                     formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
+                    event.target.classList.remove('valid')
                     // 限定输入 8-14 个字符
                     for (let i = 0; i < formattedValue.length; i++) {
                         len++
-                        event.target.classList.remove('valid')
                         if (len >= 8) { event.target.classList.add('valid') }
                         if (len > 14) {
                             formattedValue = formattedValue.slice(0, i)
