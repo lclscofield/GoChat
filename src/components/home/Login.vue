@@ -74,6 +74,7 @@
                             break
                         }
                     }
+                    this.inputUserName = formattedValue
                 } else {
                     // 过滤密码输入，只能输入字母、数字混合
                     formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
@@ -87,6 +88,7 @@
                             break
                         }
                     }
+                    this.inputPassword = formattedValue
                 }
                 event.target.value = formattedValue
             },
