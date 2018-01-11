@@ -81,11 +81,10 @@
                     for (let i = 0; i < formattedValue.length; i++) {
                         len++
                         event.target.classList.remove('valid')
+                        if (len >= 8) { event.target.classList.add('valid') }
                         if (len > 14) {
                             formattedValue = formattedValue.slice(0, i)
                             break
-                        } else if (len >= 8) {
-                            event.target.classList.add('valid')
                         }
                     }
                 }
@@ -154,14 +153,14 @@
               padding: 8px 8px;
               font-size: 15px;
               background: #d5e6f0;
-              border: 1px solid #aaa;
-              box-shadow: 0px 0px 3px #555;
+              border: 2px solid #aaa;
+              box-shadow: 0px 0px 0px #555;
               border-radius: 4px;
             }
 
             > input:focus {
-              border: 1px solid #555;
-              box-shadow: 0 0 3px #aaa;
+              border: 2px solid #555;
+              box-shadow: 0 0 1px #aaa;
             }
 
             > input:focus {
