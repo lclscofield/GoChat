@@ -5,7 +5,7 @@
             <div class="panel">
                 <Info @showMenu="switchOver(true)" />
                 <Search />
-                <MessageList />
+                <Tab />
                 <Menu v-if="seen" />
             </div>
             <div class="shade"
@@ -33,9 +33,6 @@
             return {
                 seen: false
             }
-        },
-        created () {
-            console.log(123)
         },
         methods: {
             switchOver (bool) {
