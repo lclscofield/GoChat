@@ -60,7 +60,7 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           word-wrap: normal;
-          color: #fff;
+          color: #333;
           font-size: 18px;
           vertical-align: top;
           line-height: 31px;

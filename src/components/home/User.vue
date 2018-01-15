@@ -74,7 +74,7 @@
           width: 280px;
           height: 100%;
           float: left;
-          background: #2e3238;
+          background: #9bc9e5;
         }
 
         > .shade {

@@ -38,10 +38,10 @@
       z-index: 99;
 
       > ul {
-        background-color: #fff;
+        background-color: #eee;
         border-radius: 4px;
         overflow: hidden;
-        border: 1px solid #d6d6d6;
+        border: 1px solid #e8e4e4;
         box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
         min-width: 125px;
 
@@ -52,8 +52,12 @@
             color: #000;
             font-size: 14px;
             padding: 8px;
-            border-bottom: 1px solid #f1f1f1;
+            border-bottom: 1px solid #a5a3a3;
             text-align: left;
+
+            &:hover {
+                background-color: #ddd;
+            }
 
             > i {
               display: inline-block;
@@ -67,6 +71,9 @@
           }
         }
 
+        li:last-child a {
+          border: none;
+        }
         li:nth-child(1) i {
           background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
             0 -66px;
