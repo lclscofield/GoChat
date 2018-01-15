@@ -7,7 +7,9 @@
         <div class="info">
             <h3 class="nickname">
                 <span>hahaha</span>
-                <a href=""></a>
+                <a href="javascript:;">
+                    <i></i>
+                </a>
             </h3>
         </div>
     </div>
@@ -61,6 +63,22 @@
           vertical-align: top;
           line-height: 31px;
           text-decoration: none;
+        }
+
+        a {
+          display: inline-block;
+          vertical-align: top;
+
+          > i {
+            display: inline-block;
+            vertical-align: middle;
+            width: 30px;
+            height: 30px;
+            background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png")
+              no-repeat;
+            background-position: -434px -398px;
+            background-size: 487px 462px;
+          }
         }
       }
     }
