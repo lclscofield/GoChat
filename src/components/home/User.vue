@@ -3,7 +3,7 @@
         <div class="main">
             <!-- begin panel -->
             <div class="panel">
-                <Info />
+                <Info @emitSwitch="switchOver" />
                 <Search />
                 <MessageList />
                 <Menu v-if="seen" />
@@ -33,6 +33,11 @@
         },
         created () {
             console.log(123)
+        },
+        methods: {
+            switchOver () {
+                this.seen = true
+            }
         }
     }
 </script>

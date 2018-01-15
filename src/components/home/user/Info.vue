@@ -7,7 +7,8 @@
         <div class="info">
             <h3 class="nickname">
                 <span>hahaha</span>
-                <a href="javascript:;">
+                <a href="javascript:;"
+                   @click="() => {this.$emit('emitSwitch')}">
                     <i></i>
                 </a>
             </h3>
@@ -17,7 +18,8 @@
 
 <script>
     export default {
-        name: 'Info'
+        name: 'Info',
+        methods: {}
     }
 </script>
 
