@@ -22,13 +22,13 @@
 <script>
     import Info from './user/Info'
     import Search from './user/Search'
-    import MessageList from './user/MessageList'
-    import MessageWindow from './user/MessageWindow'
+    import Tab from './user/tab/Tab'
+    import MessageWindow from './user/messageWindow/MessageWindow'
     import Menu from './user/Menu'
 
     export default {
         name: 'User',
-        components: { Info, Search, MessageList, MessageWindow, Menu },
+        components: { Info, Search, Tab, MessageWindow, Menu },
         data () {
             return {
                 seen: false
