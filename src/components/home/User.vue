@@ -4,19 +4,15 @@
             <!-- begin panel -->
             <div class="panel">
                 <div class="panel-header">
-                    <div class="avatar">
-                        <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
-                             alt="avatar">
-                    </div>
-                    <div class="info">
-                        <h3 class="nickname">
-                            <span></span>
-                            <a href=""></a>
-                        </h3>
-                    </div>
+                    <router-view name="info" />
                 </div>
+                <router-view name="search" />
+                <router-view name="messageList" />
             </div>
             <!-- end panel -->
+            <!-- begin messageWindow -->
+            <router-view name="messageWindow" />
+            <!-- end messageWindow -->
         </div>
     </div>
 </template>
@@ -60,36 +56,6 @@
           height: 100%;
           float: left;
           background: #2e3238;
-
-          > .panel-header {
-            padding: 18px;
-            position: relative;
-
-            > .avatar {
-              display: table-cell;
-              vertical-align: middle;
-              word-wrap: break-word;
-              word-break: break-all;
-              white-space: nowrap;
-              padding-right: 10.625px;
-
-              > img {
-                width: 40px;
-                height: 40px;
-                border-radius: 2px;
-                display: block;
-                cursor: pointer;
-              }
-            }
-
-            > .info {
-              display: table-cell;
-              vertical-align: middle;
-              word-wrap: break-word;
-              word-break: break-all;
-              width: 2000px;
-            }
-          }
         }
       }
     }
