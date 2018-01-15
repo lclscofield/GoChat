@@ -3,43 +3,34 @@
         <div class="main">
             <!-- begin panel -->
             <div class="panel">
-                <router-view name="info" />
-                <router-view name="search" />
-                <router-view name="messageList" />
-                <div class="menu">
-                    <ul>
-                        <li>
-                            <a href="javascript:;"
-                               title="发起聊天">
-                                <i></i>发起聊天
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;"
-                               title="关闭声音">
-                                <i></i>关闭声音
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;"
-                               title="退出">
-                                <i></i>退出
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <Info />
+                <Search />
+                <MessageList />
+                <Menu v-if="seen" />
             </div>
             <!-- end panel -->
             <!-- begin messageWindow -->
-            <router-view name="messageWindow" />
+            <MessageWindow />
             <!-- end messageWindow -->
         </div>
     </div>
 </template>
 
 <script>
+    import Info from './user/Info'
+    import Search from './user/Search'
+    import MessageList from './user/MessageList'
+    import MessageWindow from './user/MessageWindow'
+    import Menu from './user/Menu'
+
     export default {
         name: 'User',
+        components: { Info, Search, MessageList, MessageWindow, Menu },
+        data () {
+            return {
+                seen: false
+            }
+        },
         created () {
             console.log(123)
         }
@@ -76,58 +67,6 @@
           height: 100%;
           float: left;
           background: #2e3238;
-
-          > .menu {
-            position: absolute;
-            top: 60px;
-            left: 85px;
-            width: 180px;
-            z-index: 99;
-
-            > ul {
-              background-color: #fff;
-              border-radius: 4px;
-              overflow: hidden;
-              border: 1px solid #d6d6d6;
-              box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
-              min-width: 125px;
-
-              > li {
-                > a {
-                  display: block;
-                  text-decoration: none;
-                  color: #000;
-                  font-size: 14px;
-                  padding: 8px;
-                  border-bottom: 1px solid #f1f1f1;
-                  text-align: left;
-
-                  > i {
-                    display: inline-block;
-                    vertical-align: middle;
-                    width: 34px;
-                    height: 34px;
-                    margin-right: 8px;
-                    background-position: -238px -398px;
-                    background-size: 487px 462px;
-                  }
-                }
-              }
-
-              li:nth-child(1) i {
-                background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
-                  0 -66px;
-              }
-              li:nth-child(2) i {
-                background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
-                  0 -338px;
-              }
-              li:nth-child(3) i {
-                background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
-                  0 -270px;
-              }
-            }
-          }
         }
       }
     }
