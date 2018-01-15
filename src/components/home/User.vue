@@ -3,11 +3,14 @@
         <div class="main">
             <!-- begin panel -->
             <div class="panel">
-                <Info @emitSwitch="switchOver" />
+                <Info @showMenu="switchOver(true)" />
                 <Search />
                 <MessageList />
                 <Menu v-if="seen" />
             </div>
+            <div class="shade"
+                 v-if="seen"
+                 @click="switchOver(false)"></div>
             <!-- end panel -->
             <!-- begin messageWindow -->
             <MessageWindow />
@@ -35,8 +38,8 @@
             console.log(123)
         },
         methods: {
-            switchOver () {
-                this.seen = true
+            switchOver (bool) {
+                this.seen = bool
             }
         }
     }
@@ -72,6 +75,15 @@
           height: 100%;
           float: left;
           background: #2e3238;
+        }
+
+        > .shade {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 98;
         }
       }
     }

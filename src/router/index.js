@@ -3,10 +3,6 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/home/Login'
 import User from '@/components/home/User'
-import Info from '@/components/home/user/Info'
-import Search from '@/components/home/user/Search'
-import MessageList from '@/components/home/user/MessageList'
-import MessageWindow from '@/components/home/user/MessageWindow'
 
 Vue.use(Router)
 

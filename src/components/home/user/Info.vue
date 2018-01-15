@@ -8,7 +8,7 @@
             <h3 class="nickname">
                 <span>hahaha</span>
                 <a href="javascript:;"
-                   @click="() => {this.$emit('emitSwitch')}">
+                   @click="() => {this.$emit('showMenu')}">
                     <i></i>
                 </a>
             </h3>
