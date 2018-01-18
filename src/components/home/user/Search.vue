@@ -24,14 +24,13 @@
         vertical-align: middle;
         width: 30px;
         height: 30px;
-        z-index: 100;
         top: 1px;
         background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
           0 -1946px;
       }
 
       > input {
-        width: 214px;
+        width: 244px;
         height: 32px;
         line-height: 32px;
         border: 0;

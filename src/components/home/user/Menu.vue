@@ -35,7 +35,7 @@
       top: 60px;
       left: 85px;
       width: 180px;
-      z-index: 99;
+      z-index: 100;
 
       > ul {
         background-color: #eee;
