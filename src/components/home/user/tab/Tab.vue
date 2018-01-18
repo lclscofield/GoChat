@@ -1,23 +1,48 @@
 <template>
     <div id="tab">
         <div class="tab">
-            <div class="message active">
+            <div class="message"
+                 :class="{ active: isActive }"
+                 @click="show(true)">
                 <a href="javascript:;">
                     <i></i>
                 </a>
             </div>
-            <div class="group">
+            <div class="group"
+                 :class="{ active: !isActive }"
+                 @click="show(false)">
                 <a href="javascript:;">
                     <i></i>
                 </a>
             </div>
         </div>
+        <!-- begin message-list -->
+        <message-list v-if="seen" />
+        <!-- end message-list -->
+        <!-- begin group -->
+        <group v-if="!seen" />
+        <!-- end group -->
     </div>
 </template>
 
 <script>
+    import MessageList from './MessageList'
+    import Group from './Group'
     export default {
-        name: 'Tab'
+        name: 'Tab',
+        components: { MessageList, Group },
+        data () {
+            return {
+                seen: true,
+                isActive: true
+            }
+        },
+        methods: {
+            show (bool) {
+                this.isActive = bool
+                this.seen = bool
+            }
+        }
     }
 </script>
 
