@@ -17,10 +17,10 @@
             </div>
         </div>
         <!-- begin message-list -->
-        <message-list v-if="seen" />
+        <message-list v-if="isActive" />
         <!-- end message-list -->
         <!-- begin group -->
-        <group v-if="!seen" />
+        <group v-if="!isActive" />
         <!-- end group -->
     </div>
 </template>
@@ -33,14 +33,12 @@
         components: { MessageList, Group },
         data () {
             return {
-                seen: true,
                 isActive: true
             }
         },
         methods: {
             show (bool) {
                 this.isActive = bool
-                this.seen = bool
             }
         }
     }
@@ -51,16 +49,24 @@
       > .tab {
         overflow: hidden;
         padding-bottom: 4px;
+        position: relative;
 
         &::after {
           content: "";
           display: block;
           clear: both;
+          position: absolute;
+          border-bottom: 1px solid #9bb8ee;
+          height: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
         }
 
         > .message {
           float: left;
           width: 50%;
+          position: relative;
 
           > a {
             display: block;
@@ -79,6 +85,16 @@
           &.active > a > i {
             background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
               0 -2083px;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 7px;
+            right: 0;
+            width: 0;
+            height: 20px;
+            border-right: 1px solid #869bc1;
           }
         }
 
