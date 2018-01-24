@@ -1,10 +1,10 @@
 <template>
-    <div id="MessageInput"></div>
+    <div id="boxInput"></div>
 </template>
 
 <script>
     export default {
-        name: 'MessageInput'
+        name: 'BoxInput'
     }
 </script>
 
