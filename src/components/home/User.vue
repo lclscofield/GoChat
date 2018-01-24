@@ -9,7 +9,7 @@
                 <Menu v-if="seen" />
             </div>
             <div class="shade"
-                 v-if="seen"
+                 v-if="isActive"
                  @click="switchOver(false)"></div>
             <!-- end panel -->
             <!-- begin messageWindow -->
@@ -25,6 +25,10 @@
     import Tab from './user/tab/Tab'
     import MessageWindow from './user/messageWindow/MessageWindow'
     import Menu from './user/Menu'
+    import {
+        mapGetters,
+        mapMutations
+    } from 'vuex'
 
     export default {
         name: 'User',
@@ -34,9 +38,18 @@
                 seen: false
             }
         },
+        computed: {
+            ...mapGetters([
+                'isActive'
+            ])
+        },
         methods: {
+            ...mapMutations([
+                'setIsActive'
+            ]),
             switchOver (bool) {
                 this.seen = bool
+                this.setIsActive(bool)
             }
         }
     }

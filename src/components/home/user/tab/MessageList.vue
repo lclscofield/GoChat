@@ -4,7 +4,8 @@
             <div class="chatItem">
                 <div class="avatar">
                     <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
-                         alt="avatar"></div>
+                         alt="avatar">
+                </div>
                 <div class="info">
                     <h3 class="nickname">
                         <span>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</span>
