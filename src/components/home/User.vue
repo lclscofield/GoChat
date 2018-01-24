@@ -13,7 +13,7 @@
                  @click="switchOver(false)"></div>
             <!-- end panel -->
             <!-- begin messageWindow -->
-            <MessageWindow />
+            <Box />
             <!-- end messageWindow -->
         </div>
     </div>
@@ -23,7 +23,7 @@
     import Info from './user/Info'
     import Search from './user/Search'
     import Tab from './user/tab/Tab'
-    import MessageWindow from './user/messageWindow/MessageWindow'
+    import Box from './user/messageWindow/Box'
     import Menu from './user/Menu'
     import {
         mapGetters,
@@ -32,7 +32,7 @@
 
     export default {
         name: 'User',
-        components: { Info, Search, Tab, MessageWindow, Menu },
+        components: { Info, Search, Tab, Box, Menu },
         data () {
             return {
                 seen: false
