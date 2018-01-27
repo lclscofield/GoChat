@@ -4,11 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import qs from 'qs'
 import store from './vuex'
 import './assets/reset.scss'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+Vue.prototype.$qs = qs
 
 /* eslint-disable no-new */
 
