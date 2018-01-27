@@ -11,7 +11,7 @@
                     <label for="username">UserName:</label>
                     <input type="text"
                            name="username"
-                           class="valid"
+                           :class="{ valid: inputUserName }"
                            autocomplete="off"
                            :value="inputUserName"
                            @compositionstart="switchLock(true)"
@@ -23,6 +23,7 @@
                     <label for="password">Password:</label>
                     <input type="password"
                            name="password"
+                           :class="{ valid: inputPassword.length >= 8 }"
                            :value="inputPassword"
                            @compositionstart="switchLock(true)"
                            @compositionend="switchLock(false, $event)"
@@ -30,9 +31,9 @@
                            placeholder="8-14位数字、字母混合">
                 </div>
                 <div>
-                    <button class="register">注 册</button>
-                    <button class="login"
-                            @click="login">登 录</button>
+                    <button class="login">登 录</button>
+                    <button class="register"
+                            @click="register">注册>></button>
                 </div>
             </form>
         </div>
@@ -78,11 +79,9 @@
                 } else {
                     // 过滤密码输入，只能输入字母、数字混合
                     formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
-                    event.target.classList.remove('valid')
                     // 限定输入 8-14 个字符
                     for (let i = 0; i < formattedValue.length; i++) {
                         len++
-                        if (len >= 8) { event.target.classList.add('valid') }
                         if (len > 14) {
                             formattedValue = formattedValue.slice(0, i)
                             break
@@ -92,8 +91,20 @@
                 }
                 event.target.value = formattedValue
             },
-            login (event) {
-                console.log(event.target)
+            register () {
+                let inputUserName = this.inputUserName
+                let inputPassword = this.inputPassword
+                console.log(123)
+                const postData = {
+                    xxx1: inputUserName,
+                    xxx2: inputPassword
+                }
+                this.$axios.post('/api/register', postData)
+                    .then(function (res) {
+                        console.log(res.data)
+                    }).catch(function (err) {
+                        console.log(err)
+                    })
             }
         }
     }
@@ -174,26 +185,29 @@
             }
           }
 
-          div:last-child {
+          > div:last-child {
             padding-top: 16px;
-            display: flex;
-            justify-content: space-between;
+            text-align: center;
 
             > button {
               border: 0;
               cursor: pointer;
+            }
+
+            > button:first-child {
               padding: 4px 16px;
+              margin-right: 8px;
               background: #73c0ef;
               font-size: 16px;
               border: 1px solid #1987ca;
               border-radius: 8px;
             }
 
-            > button:hover {
+            > button:first-child:hover {
               opacity: 0.7;
             }
 
-            button:first-child {
+            > button:last-child {
               background: #9bc9e5;
               color: #1987ca;
             }
