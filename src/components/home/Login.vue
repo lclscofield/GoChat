@@ -8,12 +8,12 @@
                   method="post"
                   @submit.prevent>
                 <div>
-                    <label for="username">UserName:</label>
+                    <label for="username">Username:</label>
                     <input type="text"
                            name="username"
-                           :class="{ valid: inputUserName }"
+                           :class="{ valid: inputUsername }"
                            autocomplete="off"
-                           :value="inputUserName"
+                           :value="inputUsername"
                            @compositionstart="switchLock(true)"
                            @compositionend="switchLock(false, $event)"
                            @input="formatValue($event)"
@@ -45,7 +45,7 @@
         name: 'Login',
         data () {
             return {
-                inputUserName: '',
+                inputUsername: '',
                 inputPassword: '',
                 lock: false
             }
@@ -75,7 +75,7 @@
                             break
                         }
                     }
-                    this.inputUserName = formattedValue
+                    this.inputUsername = formattedValue
                 } else {
                     // 过滤密码输入，只能输入字母、数字混合
                     formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
@@ -92,12 +92,12 @@
                 event.target.value = formattedValue
             },
             register () {
-                let inputUserName = this.inputUserName
+                let inputUsername = this.inputUsername
                 let inputPassword = this.inputPassword
                 console.log(123)
                 const postData = {
-                    xxx1: inputUserName,
-                    xxx2: inputPassword
+                    Username: inputUsername,
+                    Password: inputPassword
                 }
                 this.$axios.post('/api/register', postData)
                     .then(function (res) {
