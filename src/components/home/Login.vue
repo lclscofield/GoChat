@@ -1,6 +1,6 @@
 <template>
     <div id="login">
-        <div class="login-box">
+        <div class="login-box animated fadeInDown">
             <h2 class="login-logo">GoChat</h2>
             <div class="login-title">用心沟通你我</div>
             <form class="login-form"
@@ -92,12 +92,10 @@
                 event.target.value = formattedValue
             },
             register () {
-                let inputUsername = this.inputUsername
-                let inputPassword = this.inputPassword
                 console.log(123)
                 const postData = {
-                    Username: inputUsername,
-                    Password: inputPassword
+                    Username: this.inputUsername,
+                    Password: this.inputPassword
                 }
                 this.$axios.post('/api/register', postData)
                     .then(function (res) {
@@ -172,12 +170,8 @@
             }
 
             > input:focus {
-              border: 2px solid #555;
+              border: 2px solid #b03535;
               box-shadow: 0 0 1px #aaa;
-            }
-
-            > input:focus {
-              border-color: #b03535;
             }
 
             > input.valid:focus {

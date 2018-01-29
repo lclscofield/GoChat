@@ -7,6 +7,7 @@ import axios from 'axios'
 import qs from 'qs'
 import store from './vuex'
 import './assets/reset.scss'
+import 'animate.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
