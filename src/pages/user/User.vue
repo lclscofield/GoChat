@@ -20,11 +20,11 @@
 </template>
 
 <script>
-    import Info from './user/Info'
-    import Search from './user/Search'
-    import Tab from './user/tab/Tab'
-    import Box from './user/messageWindow/Box'
-    import Menu from './user/Menu'
+    import Info from './panel/Info'
+    import Search from './panel/Search'
+    import Menu from './panel/Menu'
+    import Tab from './panel/tab/Tab'
+    import Box from './messageWindow/Box'
     import {
         mapGetters,
         mapMutations

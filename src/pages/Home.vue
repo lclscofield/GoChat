@@ -6,13 +6,13 @@
 </template>
 
 <script>
-    import Register from './home/Register'
+    import Register from './login/Register'
     export default {
         name: 'Home',
         components: { Register },
         data () {
             return {
-                show: false
+                show: true
             }
         }
     }
