@@ -8,30 +8,31 @@
                   method="post"
                   @submit.prevent>
                 <div>
-                    <label for="username">Username:</label>
+                    <label for="username">账号:
+                        <span v-if="hint1">账号不能为空</span>
+                        <span v-if="hint3">请输入正确的手机/用户名</span>
+                    </label>
                     <input type="text"
                            name="username"
                            :class="{ valid: inputUsername }"
                            autocomplete="off"
-                           :value="inputUsername"
-                           @compositionstart="switchLock(true)"
-                           @compositionend="switchLock(false, $event)"
-                           @input="formatValue($event)"
-                           placeholder="大小写字母、汉字、数字、下划线">
+                           v-model="inputUsername"
+                           placeholder="手机或用户名">
                 </div>
                 <div>
-                    <label for="password">Password:</label>
+                    <label for="password">密码:
+                        <span v-if="hint2">密码不能为空</span>
+                        <span v-if="hint4">请输入正确的密码</span>
+                    </label>
                     <input type="password"
                            name="password"
                            :class="{ valid: inputPassword.length >= 8 }"
-                           :value="inputPassword"
-                           @compositionstart="switchLock(true)"
-                           @compositionend="switchLock(false, $event)"
-                           @input="formatValue($event)"
-                           placeholder="8-14位数字、字母混合">
+                           v-model="inputPassword"
+                           placeholder="密码">
                 </div>
                 <div>
-                    <button class="login">登 录</button>
+                    <button class="login"
+                            @click="login">登 录</button>
                     <button class="signUp"
                             @click="signUp">注册>></button>
                 </div>
@@ -47,49 +48,27 @@
             return {
                 inputUsername: '',
                 inputPassword: '',
-                lock: false
+                hint1: false,
+                hint2: false,
+                hint3: false,
+                hint4: false
             }
         },
         methods: {
-            switchLock (bool, event) {
-                // 为非直接文字输入加上开关
-                this.lock = bool
-                if (!this.lock) {
-                    this.formatValue(event)
+            // 前端表单验证 验证账号和密码是否为空
+            valueVerify () {
+                this.hint1 = false
+                this.hint2 = false
+                if (!this.inputUsername) {
+                    this.hint1 = true
                 }
+                if (!this.inputPassword) {
+                    this.hint2 = true
+                }
+                return !(this.hint1 || this.hint1)
             },
-            formatValue (event) {
-                // 判断是否是非直接文字输入，是则不过滤
-                if (this.lock) { return }
-                // 判断是用户名还是密码框
-                let formattedValue
-                let len = 0
-                if (event.target.name === 'username') {
-                    // 过滤用户名输入，只能输入大小写字母、汉字、数字、下划线
-                    formattedValue = event.target.value.replace(/[^a-zA-Z_0-9\u4e00-\u9fa5]/g, '')
-                    // 限定输入 14 个字符，一个汉字为两个字符
-                    for (let i = 0; i < formattedValue.length; i++) {
-                        /[\u4e00-\u9fa5]/.test(formattedValue[i]) ? (len = len + 2) : len++
-                        if (len > 14) {
-                            formattedValue = formattedValue.slice(0, i)
-                            break
-                        }
-                    }
-                    this.inputUsername = formattedValue
-                } else {
-                    // 过滤密码输入，只能输入字母、数字混合
-                    formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
-                    // 限定输入 8-14 个字符
-                    for (let i = 0; i < formattedValue.length; i++) {
-                        len++
-                        if (len > 14) {
-                            formattedValue = formattedValue.slice(0, i)
-                            break
-                        }
-                    }
-                    this.inputPassword = formattedValue
-                }
-                event.target.value = formattedValue
+            login () {
+                this.valueVerify()
             },
             signUp () {
                 console.log(123)
@@ -104,6 +83,46 @@
                         console.log(err)
                     })
             }
+            // switchLock (bool, event) {
+            //     // 为非直接文字输入加上开关
+            //     this.lock = bool
+            //     if (!this.lock) {
+            //         this.formatValue(event)
+            //     }
+            // },
+            // formatValue (event) {
+            //     // 判断是否是非直接文字输入，是则不过滤
+            //     if (this.lock) { return }
+            //     // 判断是用户名还是密码框
+            //     let formattedValue
+            //     let len = 0
+            //     if (event.target.name === 'username') {
+            //         // 过滤用户名输入，只能输入大小写字母、汉字、数字、下划线
+            //         formattedValue = event.target.value.replace(/[^a-zA-Z_0-9\u4e00-\u9fa5]/g, '')
+            //         // 限定输入 14 个字符，一个汉字为两个字符
+            //         for (let i = 0; i < formattedValue.length; i++) {
+            //             /[\u4e00-\u9fa5]/.test(formattedValue[i]) ? (len = len + 2) : len++
+            //             if (len > 14) {
+            //                 formattedValue = formattedValue.slice(0, i)
+            //                 break
+            //             }
+            //         }
+            //         this.inputUsername = formattedValue
+            //     } else {
+            //         // 过滤密码输入，只能输入字母、数字混合
+            //         formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
+            //         // 限定输入 8-14 个字符
+            //         for (let i = 0; i < formattedValue.length; i++) {
+            //             len++
+            //             if (len > 14) {
+            //                 formattedValue = formattedValue.slice(0, i)
+            //                 break
+            //             }
+            //         }
+            //         this.inputPassword = formattedValue
+            //     }
+            //     event.target.value = formattedValue
+            // }
         }
     }
 </script>
@@ -154,8 +173,17 @@
 
             > label {
               font-size: 16px;
-              padding-bottom: 8px;
+              margin-bottom: 8px;
               display: block;
+              position: relative;
+
+              > span {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                font-size: 12px;
+                color: #d7362b;
+              }
             }
 
             > input {
