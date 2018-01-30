@@ -42,6 +42,9 @@
 </template>
 
 <script>
+    import {
+        mapMutations
+    } from 'vuex'
     export default {
         name: 'Login',
         data () {
@@ -55,6 +58,9 @@
             }
         },
         methods: {
+            ...mapMutations([
+                'setShowSignUp'
+            ]),
             // 前端表单验证 验证账号和密码是否为空
             valueVerify () {
                 this.hint1 = false
@@ -71,17 +77,17 @@
                 this.valueVerify()
             },
             signUp () {
-                console.log(123)
-                const postData = {
-                    Username: this.inputUsername,
-                    Password: this.inputPassword
-                }
-                this.$axios.post('/api/signUp', postData)
-                    .then(function (res) {
-                        console.log(res.data)
-                    }).catch(function (err) {
-                        console.log(err)
-                    })
+                this.setShowSignUp(true)
+                // const postData = {
+                //     Username: this.inputUsername,
+                //     Password: this.inputPassword
+                // }
+                // this.$axios.post('/api/signUp', postData)
+                //     .then(function (res) {
+                //         console.log(res.data)
+                //     }).catch(function (err) {
+                //         console.log(err)
+                //     })
             }
             // switchLock (bool, event) {
             //     // 为非直接文字输入加上开关
@@ -226,7 +232,7 @@
             }
 
             > button:first-child:hover {
-              opacity: 0.7;
+              background: #1987ca;
             }
 
             > button:last-child {

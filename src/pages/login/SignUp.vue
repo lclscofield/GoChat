@@ -1,12 +1,21 @@
 <template>
-    <div id="signUp">
+    <div id="signUp"
+         @click.self="setShowSignUp(false)">
         <div class="signUp-box"></div>
     </div>
 </template>
 
 <script>
+    import {
+        mapMutations
+    } from 'vuex'
     export default {
-        name: 'SignUp'
+        name: 'SignUp',
+        methods: {
+            ...mapMutations([
+                'setShowSignUp'
+            ])
+        }
     }
 </script>
 
@@ -23,7 +32,7 @@
       left: 0;
       z-index: 98;
 
-      > .register-box {
+      > .signUp-box {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -34,6 +43,7 @@
         width: 380px;
         height: 540px;
         box-shadow: 0 2px 10px #999;
+        z-index: 100;
       }
     }
 </style>

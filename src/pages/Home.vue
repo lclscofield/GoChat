@@ -1,19 +1,26 @@
 <template>
     <div id="home">
         <router-view />
-        <SignUp v-if="show" />
+        <SignUp v-if="showSignUp" />
     </div>
 </template>
 
 <script>
     import SignUp from './login/SignUp'
+    import {
+        mapGetters
+    } from 'vuex'
     export default {
         name: 'Home',
         components: { SignUp },
         data () {
             return {
-                show: true
             }
+        },
+        computed: {
+            ...mapGetters([
+                'showSignUp'
+            ])
         }
     }
 </script>
