@@ -3,5 +3,5 @@ export const setUserInfo = (state, userInfo) => {
 }
 
 export const setIsActive = (state, bool) => {
-    bool ? state.isActive = bool : state.isActive = !state.isActive
+    state.isActive = bool
 }
