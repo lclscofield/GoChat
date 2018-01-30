@@ -1,17 +1,17 @@
 <template>
-    <div id="register">
-        <div class="register-box"></div>
+    <div id="signUp">
+        <div class="signUp-box"></div>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'Register'
+        name: 'SignUp'
     }
 </script>
 
 <style lang="scss" scoped>
-    #register {
+    #signUp {
       height: 100%;
       min-width: 860px;
       min-height: 700px;

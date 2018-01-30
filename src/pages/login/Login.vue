@@ -32,8 +32,8 @@
                 </div>
                 <div>
                     <button class="login">登 录</button>
-                    <button class="register"
-                            @click="register">注册>></button>
+                    <button class="signUp"
+                            @click="signUp">注册>></button>
                 </div>
             </form>
         </div>
@@ -91,13 +91,13 @@
                 }
                 event.target.value = formattedValue
             },
-            register () {
+            signUp () {
                 console.log(123)
                 const postData = {
                     Username: this.inputUsername,
                     Password: this.inputPassword
                 }
-                this.$axios.post('/api/register', postData)
+                this.$axios.post('/api/signUp', postData)
                     .then(function (res) {
                         console.log(res.data)
                     }).catch(function (err) {

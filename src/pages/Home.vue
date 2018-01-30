@@ -1,15 +1,15 @@
 <template>
     <div id="home">
         <router-view />
-        <Register v-if="show" />
+        <SignUp v-if="show" />
     </div>
 </template>
 
 <script>
-    import Register from './login/Register'
+    import SignUp from './login/SignUp'
     export default {
         name: 'Home',
-        components: { Register },
+        components: { SignUp },
         data () {
             return {
                 show: true
