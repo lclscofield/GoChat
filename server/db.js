@@ -19,6 +19,7 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
     username: String, // 定义一个属性 username，类型为 String
     password: String,
+    phone: String,
     friends: [],
     groups: []
 })

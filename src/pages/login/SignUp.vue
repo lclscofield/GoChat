@@ -36,14 +36,15 @@
                            name="phone"
                            :class="{ valid: inputUsername }"
                            autocomplete="off"
-                           v-model="phone"
+                           v-model="inputPhone"
                            @blur="showPhoneHint()"
                            placeholder="11 位数字">
                 </div>
                 <div>
                     <button class="signUp"
                             @click="signUp()">注 册</button>
-                    <div class="signUpSuccess" v-if="showSignUpSuccess">注册成功</div>
+                    <div class="signUpSuccess animated bounceIn"
+                         v-if="showSignUpSuccess">注册成功</div>
                 </div>
             </form>
         </div>
@@ -52,7 +53,8 @@
 
 <script>
     import {
-        mapMutations
+        mapMutations,
+        mapActions
     } from 'vuex'
     export default {
         name: 'SignUp',
@@ -60,7 +62,7 @@
             return {
                 inputUsername: '',
                 inputPassword: '',
-                phone: '',
+                inputPhone: '',
                 usernameHint: '',
                 passwordHint: '',
                 phoneHint: '',
@@ -72,6 +74,9 @@
         methods: {
             ...mapMutations([
                 'setShowSignUp'
+            ]),
+            ...mapActions([
+                'signUpVerify'
             ]),
             showUsernameHint () {
                 this.usernameHint = ''
@@ -99,9 +104,9 @@
             },
             showPhoneHint () {
                 this.phoneHint = ''
-                if (!this.phone) {
+                if (!this.inputPhone) {
                     this.phoneHint = '手机号不能为空'
-                } else if (/[^0-9]/.test(this.phone) && this.phone.length !== 11) {
+                } else if (/[^0-9]/.test(this.inputPhone) && this.inputPhone.length !== 11) {
                     this.phoneHint = '手机号格式错误'
                 }
             },
@@ -110,8 +115,25 @@
                 this.showPasswordHint()
                 this.showPhoneHint()
                 if (!(this.usernameHint || this.passwordHint || this.phoneHint)) {
-                    console.log(123)
-                    this.showSignUpSuccess = true
+                    const postData = {
+                        username: this.inputUsername,
+                        password: this.inputPassword,
+                        phone: this.inputPhone
+                    }
+                    this.signUpVerify(postData)
+                        .then((data) => {
+                            console.log(data)
+                            if (data.type === 'success') {
+                                this.showSignUpSuccess = true
+                                setTimeout(() => {
+                                    this.setShowSignUp(false)
+                                }, 1000)
+                            } else if (data.errType === 'username') {
+                                this.usernameHint = '用户名已被注册'
+                            } else if (data.errType === 'phone') {
+                                this.phoneHint = '手机号已被注册'
+                            }
+                        })
                 }
             }
         }
