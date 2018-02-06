@@ -14,7 +14,7 @@
                            :class="{ valid: inputUsername }"
                            autocomplete="off"
                            v-model="inputUsername"
-                           @blur="showUsernameHint($event)"
+                           @blur="showUsernameHint()"
                            placeholder="字母、汉字、数字、下划线">
                 </div>
                 <div>
@@ -40,6 +40,11 @@
                            @blur="showPhoneHint()"
                            placeholder="11 位数字">
                 </div>
+                <div>
+                    <button class="signUp"
+                            @click="signUp()">注 册</button>
+                    <div class="signUpSuccess" v-if="showSignUpSuccess">注册成功</div>
+                </div>
             </form>
         </div>
     </div>
@@ -58,7 +63,8 @@
                 phone: '',
                 usernameHint: '',
                 passwordHint: '',
-                phoneHint: ''
+                phoneHint: '',
+                showSignUpSuccess: false
             }
         },
         computed: {
@@ -79,7 +85,7 @@
                         /[\u4e00-\u9fa5]/.test(this.inputUsername[i]) ? (len = len + 2) : len++
                     }
                     if (len > 16) {
-                        this.usernameHint = '限定输入最多 16 个字符（汉字*2）'
+                        this.usernameHint = '限定输入最多 16 个字符（汉字为两个字符）'
                     }
                 }
             },
@@ -97,6 +103,15 @@
                     this.phoneHint = '手机号不能为空'
                 } else if (/[^0-9]/.test(this.phone) && this.phone.length !== 11) {
                     this.phoneHint = '手机号格式错误'
+                }
+            },
+            signUp () {
+                this.showUsernameHint()
+                this.showPasswordHint()
+                this.showPhoneHint()
+                if (!(this.usernameHint || this.passwordHint || this.phoneHint)) {
+                    console.log(123)
+                    this.showSignUpSuccess = true
                 }
             }
         }
@@ -123,12 +138,12 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-left: -190px;
-        margin-top: -270px;
+        margin-left: -220px;
+        margin-top: -300px;
         border-radius: 4px;
         background-color: #9bc9e5;
-        width: 380px;
-        height: 540px;
+        width: 440px;
+        height: 600px;
         box-shadow: 0 2px 10px #999;
 
         > h2 {
@@ -142,7 +157,7 @@
           padding-top: 32px;
 
           > div {
-            padding: 8px 64px;
+            padding: 12px 72px;
 
             > label {
               font-size: 16px;
@@ -168,6 +183,34 @@
               border: 2px solid #aaa;
               box-shadow: 0px 0px 0px #555;
               border-radius: 4px;
+            }
+          }
+
+          > div:last-child {
+            padding-top: 16px;
+            margin-top: 24px;
+            text-align: center;
+
+            > button {
+              border: 0;
+              cursor: pointer;
+              width: 100%;
+              padding: 4px 16px;
+              background: #73c0ef;
+              font-size: 16px;
+              border: 1px solid #1987ca;
+              border-radius: 8px;
+            }
+
+            > button:hover {
+              background: #1987ca;
+            }
+
+            > .signUpSuccess {
+              padding-top: 16px;
+              font-size: 30px;
+              font-family: cursive;
+              color: #107207;
             }
           }
         }
