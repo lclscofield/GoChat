@@ -45,7 +45,7 @@
                     <button class="signUp"
                             @click="signUp()">注 册</button>
                     <div class="signUpSuccess animated bounceIn"
-                         v-if="showSignUpSuccess">注册成功</div>
+                         v-if="signUpSuccess">注册成功</div>
                 </div>
             </form>
         </div>
@@ -68,9 +68,8 @@
                 passwordHint: '',
                 phoneHint: '',
                 isClick: false,
-                showSignUpSuccess: false,
-                leaveSignUp: false,
-                isLoading: false
+                signUpSuccess: false,
+                leaveSignUp: false
             }
         },
         created () {
@@ -113,12 +112,12 @@
                 this.phoneHint = ''
                 if (!this.inputPhone) {
                     this.phoneHint = '手机号不能为空'
-                } else if (/[^0-9]/.test(this.inputPhone) && this.inputPhone.length !== 1) {
+                } else if (/[^0-9]/.test(this.inputPhone) && this.inputPhone.length !== 3) {
                     this.phoneHint = '手机号格式错误'
                 }
             },
             signUp () {
-                if (this.isLoading === true) {
+                if (this.signUpSuccess === true) {
                     return
                 }
                 this.showUsernameHint()
@@ -134,8 +133,8 @@
                         .then((data) => {
                             console.log(data)
                             if (data.type === 'success') {
-                                this.isLoading = true
-                                this.showSignUpSuccess = true
+                                this.signUpSuccess = true
+                                this.isClick = false
                                 setTimeout(() => {
                                     this.leave()
                                 }, 1500)
