@@ -1,7 +1,8 @@
 <template>
     <div id="signUp"
-         @click.self="setShowSignUp(false)">
-        <div class="signUp-box animated fadeInDown">
+         @click.self="isClick && leave()">
+        <div class="signUp-box animated"
+             :class="[ leaveSignUp ? 'fadeOutDown' : 'fadeInDown' ]">
             <h2>注册账号</h2>
             <form class="signUp-form"
                   @submit.prevent>
@@ -66,10 +67,16 @@
                 usernameHint: '',
                 passwordHint: '',
                 phoneHint: '',
-                showSignUpSuccess: false
+                isClick: false,
+                showSignUpSuccess: false,
+                leaveSignUp: false,
+                isLoading: false
             }
         },
-        computed: {
+        created () {
+            setTimeout(() => {
+                this.isClick = true
+            }, 1000)
         },
         methods: {
             ...mapMutations([
@@ -106,11 +113,14 @@
                 this.phoneHint = ''
                 if (!this.inputPhone) {
                     this.phoneHint = '手机号不能为空'
-                } else if (/[^0-9]/.test(this.inputPhone) && this.inputPhone.length !== 11) {
+                } else if (/[^0-9]/.test(this.inputPhone) && this.inputPhone.length !== 1) {
                     this.phoneHint = '手机号格式错误'
                 }
             },
             signUp () {
+                if (this.isLoading === true) {
+                    return
+                }
                 this.showUsernameHint()
                 this.showPasswordHint()
                 this.showPhoneHint()
@@ -124,10 +134,11 @@
                         .then((data) => {
                             console.log(data)
                             if (data.type === 'success') {
+                                this.isLoading = true
                                 this.showSignUpSuccess = true
                                 setTimeout(() => {
-                                    this.setShowSignUp(false)
-                                }, 1000)
+                                    this.leave()
+                                }, 1500)
                             } else if (data.errType === 'username') {
                                 this.usernameHint = '用户名已被注册'
                             } else if (data.errType === 'phone') {
@@ -135,6 +146,12 @@
                             }
                         })
                 }
+            },
+            leave () {
+                this.leaveSignUp = true
+                setTimeout(() => {
+                    this.setShowSignUp(false)
+                }, 1000)
             }
         }
     }
