@@ -1,6 +1,7 @@
 <template>
     <div id="login">
-        <div class="login-box animated fadeInDown">
+        <div class="login-box animated"
+             :class="[ isLoading ? 'fadeOutLeft' : 'fadeInDown' ]">
             <h2 class="login-logo">GoChat</h2>
             <div class="login-title">用心沟通你我</div>
             <form class="login-form"
@@ -10,8 +11,6 @@
                 <div>
                     <label for="username">账号:
                         <span>{{ usernameHint }}</span>
-                        <!-- <span v-if="hint1">账号不能为空</span>
-                        <span v-if="hint3">请输入正确的手机/用户名</span> -->
                     </label>
                     <input type="text"
                            name="username"
@@ -24,8 +23,6 @@
                 <div>
                     <label for="password">密码:
                         <span>{{ passwordHint }}</span>
-                        <!-- <span v-if="hint2">密码不能为空</span>
-                        <span v-if="hint4">请输入正确的密码</span> -->
                     </label>
                     <input type="password"
                            name="password"
@@ -38,7 +35,7 @@
                     <button class="login"
                             @click="login">登 录</button>
                     <button class="signUp"
-                            @click="signUp">注册>></button>
+                            @click="this.setShowSignUp(true)">注册>></button>
                 </div>
             </form>
         </div>
@@ -72,7 +69,7 @@
             showUsernameHint () {
                 this.usernameHint = ''
                 if (!this.inputUsername) {
-                    this.usernameHint = '用户名不能为空'
+                    this.usernameHint = '用户名/手机号不能为空'
                 }
             },
             showPasswordHint () {
@@ -93,64 +90,25 @@
                         password: this.inputPassword
                     }
                     this.loginVerify(postData).then(data => {
-                        console.log(postData)
                         console.log(data)
+                        if (data.errType === 'username') {
+                            this.usernameHint = '请输入正确的用户名/手机号'
+                        } else if (data.errType === 'password') {
+                            this.passwordHint = '请输入正确的密码'
+                        } else {
+                            this.isLoading = true
+                            setTimeout(() => {
+                                this.$router.push({
+                                    name: 'user',
+                                    params: {
+                                        id: this.inputUsername
+                                    }
+                                })
+                            }, 1500)
+                        }
                     })
                 }
-            },
-            signUp () {
-                this.setShowSignUp(true)
-                // const postData = {
-                //     Username: this.inputUsername,
-                //     Password: this.inputPassword
-                // }
-                // this.$axios.post('/api/signUp', postData)
-                //     .then(function (res) {
-                //         console.log(res.data)
-                //     }).catch(function (err) {
-                //         console.log(err)
-                //     })
             }
-            // switchLock (bool, event) {
-            //     // 为非直接文字输入加上开关
-            //     this.lock = bool
-            //     if (!this.lock) {
-            //         this.formatValue(event)
-            //     }
-            // },
-            // formatValue (event) {
-            //     // 判断是否是非直接文字输入，是则不过滤
-            //     if (this.lock) { return }
-            //     // 判断是用户名还是密码框
-            //     let formattedValue
-            //     let len = 0
-            //     if (event.target.name === 'username') {
-            //         // 过滤用户名输入，只能输入大小写字母、汉字、数字、下划线
-            //         formattedValue = event.target.value.replace(/[^a-zA-Z_0-9\u4e00-\u9fa5]/g, '')
-            //         // 限定输入 14 个字符，一个汉字为两个字符
-            //         for (let i = 0; i < formattedValue.length; i++) {
-            //             /[\u4e00-\u9fa5]/.test(formattedValue[i]) ? (len = len + 2) : len++
-            //             if (len > 14) {
-            //                 formattedValue = formattedValue.slice(0, i)
-            //                 break
-            //             }
-            //         }
-            //         this.inputUsername = formattedValue
-            //     } else {
-            //         // 过滤密码输入，只能输入字母、数字混合
-            //         formattedValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
-            //         // 限定输入 8-14 个字符
-            //         for (let i = 0; i < formattedValue.length; i++) {
-            //             len++
-            //             if (len > 14) {
-            //                 formattedValue = formattedValue.slice(0, i)
-            //                 break
-            //             }
-            //         }
-            //         this.inputPassword = formattedValue
-            //     }
-            //     event.target.value = formattedValue
-            // }
         }
     }
 </script>
