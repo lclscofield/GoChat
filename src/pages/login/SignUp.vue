@@ -129,21 +129,20 @@
                         password: this.inputPassword,
                         phone: this.inputPhone
                     }
-                    this.signUpVerify(postData)
-                        .then((data) => {
-                            console.log(data)
-                            if (data.type === 'success') {
-                                this.signUpSuccess = true
-                                this.isClick = false
-                                setTimeout(() => {
-                                    this.leave()
-                                }, 1500)
-                            } else if (data.errType === 'username') {
-                                this.usernameHint = '用户名已被注册'
-                            } else if (data.errType === 'phone') {
-                                this.phoneHint = '手机号已被注册'
-                            }
-                        })
+                    this.signUpVerify(postData).then((data) => {
+                        console.log(data)
+                        if (data.type === 'success') {
+                            this.signUpSuccess = true
+                            this.isClick = false
+                            setTimeout(() => {
+                                this.leave()
+                            }, 1500)
+                        } else if (data.errType === 'username') {
+                            this.usernameHint = '用户名已被注册'
+                        } else if (data.errType === 'phone') {
+                            this.phoneHint = '手机号已被注册'
+                        }
+                    })
                 }
             },
             leave () {
