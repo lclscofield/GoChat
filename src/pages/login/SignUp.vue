@@ -27,7 +27,7 @@
                            :class="{ valid: inputPassword }"
                            v-model="inputPassword"
                            @blur="showPasswordHint()"
-                           placeholder="8-14 位字符">
+                           placeholder="8-16 位字符">
                 </div>
                 <div>
                     <label for="phone">手机:
