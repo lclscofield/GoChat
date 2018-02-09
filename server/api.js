@@ -3,23 +3,20 @@ const router = express.Router()
 const db = require('./db')
 
 router.post('/signUp', (req, res) => {
-    console.log(req.body)
     const { username, phone } = req.body
-    db.UserInfo.findOne({ username }, (err, doc) => {
+    db.UserInfo.count({ username }, (err, count) => {
         if (err) {
             console.log(err)
-        } else if (doc) {
+        } else if (count) {
             res.send({ errType: 'username' })
         }
-        db.UserInfo.findOne({ phone }, (err, doc) => {
+        db.UserInfo.count({ phone }, (err, count) => {
             if (err) {
                 console.log(err)
-            } else if (doc) {
+            } else if (count) {
                 res.send({ errType: 'phone' })
             } else {
-                db.UserInfo(req.body).save(err => {
-                    console.log(err)
-                })
+                db.UserInfo.create(req.body)
                 res.send({ type: 'success' })
             }
         })
