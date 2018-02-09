@@ -112,7 +112,7 @@
                 this.phoneHint = ''
                 if (!this.inputPhone) {
                     this.phoneHint = '手机号不能为空'
-                } else if (/[^0-9]/.test(this.inputPhone) && this.inputPhone.length !== 3) {
+                } else if (/[^0-9]/.test(this.inputPhone) || this.inputPhone.length !== 3) {
                     this.phoneHint = '手机号格式错误'
                 }
             },
