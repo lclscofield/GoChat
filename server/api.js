@@ -10,20 +10,19 @@ router.post('/signUp', (req, res) => {
             console.log(err)
         } else if (doc) {
             res.send({ errType: 'username' })
-        } else {
-            db.UserInfo.findOne({ phone }, (err, doc) => {
-                if (err) {
-                    console.log(err)
-                } else if (doc) {
-                    res.send({ errType: 'phone' })
-                } else {
-                    db.UserInfo(req.body).save(err => {
-                        console.log(err)
-                    })
-                    res.send({ type: 'success' })
-                }
-            })
         }
+        db.UserInfo.findOne({ phone }, (err, doc) => {
+            if (err) {
+                console.log(err)
+            } else if (doc) {
+                res.send({ errType: 'phone' })
+            } else {
+                db.UserInfo(req.body).save(err => {
+                    console.log(err)
+                })
+                res.send({ type: 'success' })
+            }
+        })
     })
 })
 

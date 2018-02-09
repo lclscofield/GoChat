@@ -47,9 +47,7 @@ const Models = {
 // inset()
 
 function find () {
-    Models.UserInfo.findOne({
-        username: 'lcl'
-    }, (err, res) => {
+    Models.UserInfo.find({ username: 'lcl' }, (err, res) => {
         if (err) {
             console.log(err)
         } else {
