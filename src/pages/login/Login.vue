@@ -9,25 +9,29 @@
                   @submit.prevent>
                 <div>
                     <label for="username">账号:
-                        <span v-if="hint1">账号不能为空</span>
-                        <span v-if="hint3">请输入正确的手机/用户名</span>
+                        <span>{{ usernameHint }}</span>
+                        <!-- <span v-if="hint1">账号不能为空</span>
+                        <span v-if="hint3">请输入正确的手机/用户名</span> -->
                     </label>
                     <input type="text"
                            name="username"
                            :class="{ valid: inputUsername }"
                            autocomplete="off"
                            v-model="inputUsername"
+                           @blur="showUsernameHint()"
                            placeholder="手机或用户名">
                 </div>
                 <div>
                     <label for="password">密码:
-                        <span v-if="hint2">密码不能为空</span>
-                        <span v-if="hint4">请输入正确的密码</span>
+                        <span>{{ passwordHint }}</span>
+                        <!-- <span v-if="hint2">密码不能为空</span>
+                        <span v-if="hint4">请输入正确的密码</span> -->
                     </label>
                     <input type="password"
                            name="password"
-                           :class="{ valid: inputPassword.length >= 8 }"
+                           :class="{ valid: inputPassword.length >= 8 && inputPassword.length <= 16 }"
                            v-model="inputPassword"
+                           @blur="showPasswordHint()"
                            placeholder="密码">
                 </div>
                 <div>
@@ -43,7 +47,8 @@
 
 <script>
     import {
-        mapMutations
+        mapMutations,
+        mapActions
     } from 'vuex'
     export default {
         name: 'Login',
@@ -51,30 +56,47 @@
             return {
                 inputUsername: '',
                 inputPassword: '',
-                hint1: false,
-                hint2: false,
-                hint3: false,
-                hint4: false
+                usernameHint: '',
+                passwordHint: '',
+                isLoading: false
             }
         },
         methods: {
             ...mapMutations([
                 'setShowSignUp'
             ]),
+            ...mapActions([
+                'loginVerify'
+            ]),
             // 前端表单验证 验证账号和密码是否为空
-            valueVerify () {
-                this.hint1 = false
-                this.hint2 = false
+            showUsernameHint () {
+                this.usernameHint = ''
                 if (!this.inputUsername) {
-                    this.hint1 = true
+                    this.usernameHint = '用户名不能为空'
                 }
+            },
+            showPasswordHint () {
+                this.passwordHint = ''
                 if (!this.inputPassword) {
-                    this.hint2 = true
+                    this.passwordHint = '密码不能为空'
                 }
-                return !(this.hint1 || this.hint1)
             },
             login () {
-                this.valueVerify()
+                if (this.isLoading === true) {
+                    return
+                }
+                this.showUsernameHint()
+                this.showPasswordHint()
+                if (!(this.usernameHint || this.passwordHint)) {
+                    const postData = {
+                        username: this.inputUsername,
+                        password: this.inputPassword
+                    }
+                    this.loginVerify(postData).then(data => {
+                        console.log(postData)
+                        console.log(data)
+                    })
+                }
             },
             signUp () {
                 this.setShowSignUp(true)

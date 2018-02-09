@@ -46,16 +46,16 @@ const Models = {
 // }
 // inset()
 
-function find () {
-    Models.UserInfo.find({ username: 'lcl' }, (err, res) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('res:')
-            console.log(res)
-        }
-    })
-}
-find()
+// function find () {
+//     Models.UserInfo.find({ username: 'lcl' }, (err, res) => {
+//         if (err) {
+//             console.log(err)
+//         } else {
+//             console.log('res:')
+//             console.log(res)
+//         }
+//     })
+// }
+// find()
 
 module.exports = Models
