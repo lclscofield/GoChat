@@ -35,7 +35,7 @@
                     <button class="login"
                             @click="login">登 录</button>
                     <button class="signUp"
-                            @click="this.setShowSignUp(true)">注册>></button>
+                            @click="setShowSignUp(true)">注册>></button>
                 </div>
             </form>
         </div>
