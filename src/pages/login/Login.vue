@@ -104,7 +104,7 @@
                                         id: this.inputUsername
                                     }
                                 })
-                            }, 1500)
+                            }, 500)
                         }
                     })
                 }
@@ -135,6 +135,10 @@
         width: 380px;
         height: 540px;
         box-shadow: 0 2px 10px #999;
+
+        &.fadeOutLeft {
+          animation-duration: 0.5s;
+        }
 
         > .login-logo {
           font-size: 50px;

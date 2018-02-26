@@ -1,12 +1,13 @@
 <template>
     <div id="user">
-        <div class="main">
+        <div class="main animated"
+             :class="[ leaveUser ? 'fadeOutDown' : 'fadeInRight' ]">
             <!-- begin panel -->
             <div class="panel">
                 <Info @showMenu="switchOver(true)" />
                 <Search />
                 <Tab />
-                <Menu v-if="seen" />
+                <Menu v-if="menuSeen" />
             </div>
             <div class="shade"
                  v-if="isActive"
@@ -35,7 +36,8 @@
         components: { Info, Search, Tab, Box, Menu },
         data () {
             return {
-                seen: false
+                menuSeen: false,
+                leaveUser: false
             }
         },
         computed: {
@@ -48,7 +50,7 @@
                 'setIsActive'
             ]),
             switchOver (bool) {
-                this.seen = bool
+                this.menuSeen = bool
                 this.setIsActive(bool)
             }
         }
@@ -70,6 +72,10 @@
         margin: 0 auto;
         border-radius: 3px;
         overflow: hidden;
+
+        &.fadeInRight {
+          animation-duration: 0.5s;
+        }
 
         &:after {
           content: ".";
