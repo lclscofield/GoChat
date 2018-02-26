@@ -5,18 +5,28 @@ const db = require('./db')
 // 注册
 router.post('/signUp', (req, res) => {
     const { username, phone } = req.body
-    db.UserInfo.count({ username }, (err, count) => {
-        if (!err && count) {
-            res.send({ errType: 'username' })
-        } else {
-            db.UserInfo.count({ phone }, (err, count) => {
-                if (!err && count) {
-                    res.send({ errType: 'phone' })
-                } else {
-                    db.UserInfo.create(req.body)
-                    res.send({ type: 'success' })
-                }
-            })
+    db.UserInfo.findOne({ username }, (err, doc) => {
+        switch (true) {
+            case !!err:
+                console.log(err)
+                break
+            case !!doc:
+                res.send({ errType: 'username' })
+                break
+            default:
+                db.UserInfo.findOne({ phone }, (err, doc) => {
+                    switch (true) {
+                        case !!err:
+                            console.log(err)
+                            break
+                        case !!doc:
+                            res.send({ errType: 'phone' })
+                            break
+                        default:
+                            db.UserInfo.create(req.body)
+                            res.send({ type: 'success' })
+                    }
+                })
         }
     })
 })
@@ -27,12 +37,18 @@ router.get('/login', (req, res) => {
     console.log(req.query)
     db.UserInfo.findOne({ username }, (err, doc) => {
         console.log(doc)
-        if (!err && !doc) {
-            res.send({ errType: 'username' })
-        } else if (doc.password !== password) {
-            res.send({ errType: 'password' })
-        } else {
-            res.send(doc)
+        switch (true) {
+            case !!err:
+                console.log(err)
+                break
+            case !doc:
+                res.send({ errType: 'username' })
+                break
+            case doc.password !== password:
+                res.send({ errType: 'password' })
+                break
+            default:
+                res.send(doc)
         }
     })
 })
