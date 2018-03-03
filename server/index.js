@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const api = require('./api')
 const bodyParser = require('body-parser') // 解析 post 请求的中间件
+const favicon = require('serve-favicon')
+const cookieParser = require('cookie-parser')
 const fs = require('fs')
 const app = express()
 
