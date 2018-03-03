@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const api = require('./api')
 const bodyParser = require('body-parser') // 解析 post 请求的中间件
+const fs = require('fs')
 const app = express()
 
 app.set('port', (process.env.port || 3000))
@@ -12,8 +13,9 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(api)
 
-app.get('/', (req, res) => {
-    res.send('404')
+app.get('*', (req, res) => {
+    const html = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8')
+    res.send(html)
 })
 
 app.listen(app.get('port'), () => {

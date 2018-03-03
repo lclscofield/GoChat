@@ -5,7 +5,7 @@ export const signUpVerify = ({ commit }, postData) => {
     return new Promise((resolve, reject) => {
         http({
             method: 'post',
-            url: '/api/signUp',
+            url: '/home/signUp',
             data: postData
         }).then((res) => {
             resolve(res.data)
@@ -20,7 +20,7 @@ export const loginVerify = ({ commit }, postData) => {
     return new Promise((resolve, reject) => {
         http({
             method: 'get',
-            url: '/api/login',
+            url: '/home/login',
             params: postData
         }).then((res) => {
             commit('setUserInfo', res.data)
