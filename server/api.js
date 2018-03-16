@@ -48,9 +48,22 @@ router.get('/login', (req, res) => {
                 res.send({ errType: 'password' })
                 break
             default:
+                res.cookie('isLoading', doc._id, {
+                    path: '/home/user/:id'
+                })
                 res.send(doc)
         }
     })
 })
+
+// // 刷新用户页或直接进用户页
+// router.get('/home/user/:id', (req, res, next) => {
+//     if (req.cookies.isLoading) {
+
+//         next()
+//     } else {
+
+//     }
+// })
 
 module.exports = router

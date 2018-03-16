@@ -8,6 +8,8 @@ const fs = require('fs')
 const app = express()
 
 app.set('port', (process.env.port || 3000))
+// app.use(favicon(path.join(__dirname, '../dist/favicon.ico')))
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../dist')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
