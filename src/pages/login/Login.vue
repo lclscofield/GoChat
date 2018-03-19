@@ -91,20 +91,23 @@
                     }
                     this.loginVerify(postData).then(data => {
                         console.log(data)
-                        if (data.errType === 'username') {
-                            this.usernameHint = '请输入正确的用户名/手机号'
-                        } else if (data.errType === 'password') {
-                            this.passwordHint = '请输入正确的密码'
-                        } else {
-                            this.isLoading = true
-                            setTimeout(() => {
-                                this.$router.push({
-                                    name: 'user',
-                                    params: {
-                                        id: this.inputUsername
-                                    }
-                                })
-                            }, 500)
+                        switch (true) {
+                            case data.errType === 'username':
+                                this.usernameHint = '请输入正确的用户名/手机号'
+                                break
+                            case data.errType === 'password':
+                                this.passwordHint = '请输入正确的密码'
+                                break
+                            default:
+                                this.isLoading = true
+                                setTimeout(() => {
+                                    this.$router.push({
+                                        name: 'user',
+                                        params: {
+                                            id: this.inputUsername
+                                        }
+                                    })
+                                }, 500)
                         }
                     })
                 }
