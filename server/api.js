@@ -3,7 +3,7 @@ const router = express.Router()
 const db = require('./db')
 
 // 注册
-router.post('/signUp', (req, res) => {
+router.post('/api/signUp', (req, res) => {
     const { username, phone } = req.body
     db.UserInfo.findOne({ username }, (err, doc) => {
         switch (true) {
@@ -24,7 +24,7 @@ router.post('/signUp', (req, res) => {
                             break
                         default:
                             db.UserInfo.create(req.body)
-                            res.send({ type: 'success' })
+                            res.send({ errType: 'success' })
                     }
                 })
         }
@@ -32,7 +32,7 @@ router.post('/signUp', (req, res) => {
 })
 
 // 登录
-router.get('/login', (req, res) => {
+router.get('/api/login', (req, res) => {
     const { username, password } = req.query
     console.log(req.query)
     db.UserInfo.findOne({ username }, (err, doc) => {
@@ -56,13 +56,24 @@ router.get('/login', (req, res) => {
     })
 })
 
-// // 刷新用户页或直接进用户页
+// 刷新用户页或直接进用户页
 // router.get('/home/user/:id', (req, res, next) => {
 //     if (req.cookies.isLoading) {
-
+//         const id = req.cookies.isLoading
+//         db.UserInfo.findOne({ id }, (err, doc) => {
+//             switch (true) {
+//                 case !!err:
+//                     console.log(err)
+//                     break
+//                 case doc:
+//                     res.redirect(301, `/home/user/${doc.username}`)
+//                     break
+//                 default:
+//                     console.log('数据被意外删除')
+//             }
+//         })
 //         next()
 //     } else {
-
 //     }
 // })
 

@@ -8,24 +8,25 @@ Vue.use(Router)
 
 export default new Router({
     mode: 'history',
-    routes: [{
-        path: '/',
-        redirect: '/home/login'
-    },
-    {
-        path: '/home',
-        name: 'home',
-        component: Home,
-        redirect: '/home/login',
-        children: [{
-            path: 'login',
-            name: 'login',
-            component: Login
-        }, {
-            path: 'user/:id',
-            name: 'user',
-            component: User
-        }]
-    }
+    routes: [
+        {
+            path: '*',
+            redirect: '/home/login'
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: Home,
+            redirect: '/home/login',
+            children: [{
+                path: 'login',
+                name: 'login',
+                component: Login
+            }, {
+                path: 'user/:id',
+                name: 'user',
+                component: User
+            }]
+        }
     ]
 })
