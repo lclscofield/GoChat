@@ -124,7 +124,7 @@
       height: 100%;
       min-width: 860px;
       min-height: 700px;
-      overflow: auto;
+      overflow: hidden;
       position: relative;
 
       > .login-box {

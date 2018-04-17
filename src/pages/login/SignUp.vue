@@ -166,7 +166,7 @@
       height: 100%;
       min-width: 860px;
       min-height: 700px;
-      overflow: auto;
+      overflow: hidden;
       position: absolute;
       top: 0;
       right: 0;

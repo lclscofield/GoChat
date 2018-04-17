@@ -28,5 +28,6 @@
 <style lang="scss" scoped>
     #home {
       height: 100%;
+      overflow: hidden;
     }
 </style>
