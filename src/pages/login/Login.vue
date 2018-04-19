@@ -86,13 +86,13 @@
                 this.showPasswordHint()
                 if (!(this.usernameHint || this.passwordHint)) {
                     const postData = {
-                        username: this.inputUsername,
+                        account: this.inputUsername,
                         password: this.inputPassword
                     }
                     this.loginVerify(postData).then(data => {
                         console.log(data)
                         switch (true) {
-                            case data.errType === 'username':
+                            case data.errType === 'account':
                                 this.usernameHint = '请输入正确的用户名/手机号'
                                 break
                             case data.errType === 'password':
