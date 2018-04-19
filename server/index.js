@@ -2,14 +2,14 @@ const express = require('express')
 const path = require('path')
 const api = require('./api')
 const bodyParser = require('body-parser') // 解析 post 请求的中间件
-// const favicon = require('serve-favicon')
+const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const fs = require('fs')
-const db = require('./db')
+// const db = require('./db')
 const app = express()
 
 app.set('port', (process.env.port || 3000))
-// app.use(favicon(path.join(__dirname, '../dist/favicon.ico')))
+app.use(favicon(path.join(__dirname, '../favicon.ico')))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../dist')))
 app.use(bodyParser.json())
@@ -30,25 +30,14 @@ app.use(api)
 
 app.get('*', (req, res) => {
     console.log(123)
+    console.log(req.cookies.isLoading)
     const html = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8')
-    // res.send(html)
-    if (req.cookies.isLoading) {
-        const id = req.cookies.isLoading
-        db.UserInfo.findOne({ id }, (err, doc) => {
-            switch (true) {
-                case !!err:
-                    console.log(err)
-                    break
-                case doc:
-                    res.redirect(301, `/home/user/${doc.username}`)
-                    break
-                default:
-                    console.log('数据被意外删除')
-            }
-        })
-    } else {
-        // res.redirect(301, '/')
+    if (req.path === '/home/login' || req.path === '/home' || !!req.cookies.isLoading) {
+        console.log(789)
         res.send(html)
+    } else {
+        console.log(456)
+        res.send('404')
     }
 })
 

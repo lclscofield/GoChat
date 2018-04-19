@@ -19,9 +19,9 @@ export const signUpVerify = ({ commit }, postData) => {
 export const loginVerify = ({ commit }, postData) => {
     return new Promise((resolve, reject) => {
         http({
-            method: 'get',
+            method: 'post',
             url: '/api/login',
-            params: postData
+            data: postData
         }).then((res) => {
             commit('setUserInfo', res.data)
             resolve(res.data)
