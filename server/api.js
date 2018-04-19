@@ -32,26 +32,32 @@ router.post('/api/signUp', (req, res) => {
 })
 
 // 登录
-router.get('/api/login', (req, res) => {
-    const { username, password } = req.query
-    console.log(req.query)
-    db.UserInfo.findOne({ username }, (err, doc) => {
+router.post('/api/login', (req, res) => {
+    const { account, password } = req.body
+    console.log(req.body)
+    db.UserInfo.findOne({ $or: [{ username: account }, { phone: account }] }, (err, doc) => {
         console.log(doc)
         switch (true) {
             case !!err:
                 console.log(err)
                 break
             case !doc:
-                res.send({ errType: 'username' })
+                res.send({ errType: 'account' })
                 break
             case doc.password !== password:
                 res.send({ errType: 'password' })
                 break
             default:
                 res.cookie('isLoading', doc._id, {
-                    path: '/home/user/:id'
+                    path: `/home/user/${doc.username}`
                 })
-                res.send(doc)
+                const data = {
+                    username: doc.username,
+                    phone: doc.phone,
+                    friends: doc.friends,
+                    groups: doc.groups
+                }
+                res.send(data)
         }
     })
 })
