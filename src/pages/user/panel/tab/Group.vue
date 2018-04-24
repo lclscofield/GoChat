@@ -64,12 +64,8 @@
                 'getMessage'
             ]),
             emitSession (item) {
-                console.log(1)
                 if (!this.getUserInfo.chatHistory.length || !this.getUserInfo.chatHistory.some(someone => someone.chatId === item.chatId)) {
-                    console.log(2)
-                    this.addSession(item).then(() => {
-                        console.log('hahaha')
-                    })
+                    this.addSession(item)
                 }
                 this.$emit('emitChat', { item, bool: true })
             }

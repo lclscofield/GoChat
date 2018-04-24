@@ -1,7 +1,6 @@
 <template>
     <div id="boxHead">
-        <div class="chatRoomMembersWrap"
-             v-if="getNowChat">
+        <div class="chatRoomMembersWrap">
             <div class="membersWrap"
                  v-if="seen">
                 <div class="members">
@@ -12,18 +11,17 @@
                         <div class="member">
                             <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
                                  alt="avatar">
-                            <p class="nickname">{{ getNowChat.name }}</p>
+                            <p class="nickname">{{ nowChat.name }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="titleWrap"
-             v-if="getNowChat">
+        <div class="titleWrap">
             <div class="title"
                  :class="{ active: seen }"
                  @click="showMembers()">
-                <a class="titleName">{{ getNowChat.name }}</a>
+                <a class="titleName">{{ nowChat.name }}</a>
                 <i></i>
             </div>
         </div>
@@ -35,12 +33,17 @@
         mapGetters,
         mapMutations
     } from 'vuex'
+
     export default {
         name: 'BoxHead',
+        props: ['nowChat'],
         data () {
             return {
                 seen: false // 显示成员列表
             }
+        },
+        created () {
+            console.log(this.nowChat)
         },
         watch: {
             isActive () {
@@ -51,8 +54,7 @@
         },
         computed: {
             ...mapGetters([
-                'isActive',
-                'getNowChat'
+                'isActive'
             ])
         },
         methods: {

@@ -1,10 +1,11 @@
 <template>
     <div id="box">
         <!-- begin head -->
-        <BoxHead />
+        <BoxHead v-if="Object.keys(getNowChat).length"
+                 :nowChat="getNowChat" />
         <!-- end head -->
         <!-- begin body -->
-        <BoxBody />
+        <BoxBody :chatHistory="chatHistory" />
         <!-- end body -->
         <!-- begin input -->
         <BoxInput />
@@ -16,9 +17,33 @@
     import BoxHead from './BoxHead'
     import BoxBody from './BoxBody'
     import BoxInput from './BoxInput'
+    import {
+        mapGetters
+    } from 'vuex'
+
     export default {
         name: 'Box',
-        components: { BoxHead, BoxBody, BoxInput }
+        components: { BoxHead, BoxBody, BoxInput },
+        props: {
+            chatHistories: {
+                type: Array
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'getNowChat'
+            ]),
+            chatHistory () {
+                this.chatHistories.forEach(item => {
+                    if (this.getNowChat.chatId === item.chatId) {
+                        return item
+                    }
+                })
+            }
+        },
+        created () {
+            console.log(this.getNowChat, this.chatHistories)
+        }
     }
 </script>
 

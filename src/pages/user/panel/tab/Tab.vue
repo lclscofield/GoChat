@@ -18,13 +18,13 @@
         </div>
         <!-- begin message-list -->
         <message-list v-if="isActive"
-                      :messageList="messageList"
+                      :messageList="userInfo.chatHistory"
                       @emitChat="emitMessage" />
         <!-- end message-list -->
         <!-- begin group -->
         <group v-if="!isActive"
-               :friends="friends"
-               :groups="groups"
+               :friends="userInfo.friends"
+               :groups="userInfo.groups"
                @emitChat="emitMessage" />
         <!-- end group -->
     </div>
@@ -34,20 +34,18 @@
     import MessageList from './MessageList'
     import Group from './Group'
     import {
-        mapMutations
+        mapMutations,
+        mapActions
     } from 'vuex'
 
     export default {
         name: 'Tab',
         components: { MessageList, Group },
         props: {
-            friends: {
-                type: Array
+            userInfo: {
+                type: Object
             },
-            groups: {
-                type: Array
-            },
-            messageList: {
+            chatHistories: {
                 type: Array
             }
         },
@@ -60,11 +58,17 @@
             ...mapMutations([
                 'setNowChat'
             ]),
+            ...mapActions([
+                'getMessage'
+            ]),
             show (bool) {
                 this.isActive = bool
             },
             emitMessage (obj) {
                 this.show(obj.bool)
+                if (!this.chatHistories.length || !this.chatHistories.some(someone => someone.chatId === obj.item.chatId)) {
+                    this.getMessage(obj.item.chatId)
+                }
                 this.setNowChat(obj.item)
             }
         }

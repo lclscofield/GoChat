@@ -16,7 +16,10 @@ export const signUpVerify = ({ commit }, postData) => {
 }
 
 // 登录验证
-export const loginVerify = ({ commit }, postData) => {
+export const loginVerify = ({ commit, state }, postData) => {
+    commit('setUserInfo', {})
+    commit('setChatHistories', false)
+    commit('setNowChat', {})
     return new Promise((resolve, reject) => {
         http({
             method: 'post',
@@ -50,15 +53,16 @@ export const addSession = ({ commit, state }, item) => {
 }
 
 // 获取聊天纪录
-export const getMessage = ({ commit }, obj) => {
+export const getMessage = ({ commit }, chatId) => {
     return new Promise((resolve, reject) => {
         http({
             method: 'post',
             url: '/api/getMessage',
-            data: obj
+            data: chatId
         }).then((res) => {
             commit('setChatHistories', res.data)
-            sessionStorage.setItem('chatHistories', res.data)
+            sessionStorage.setItem('chatHistories', JSON.stringify(res.data))
+            resolve(res.data)
         }).catch((err) => {
             console.log(err)
         })

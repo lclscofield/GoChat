@@ -7,9 +7,8 @@
                 <Info @showMenu="switchOver(true)"
                       :username="getUserInfo.username" />
                 <Search />
-                <Tab :friends="getUserInfo.friends"
-                     :groups="getUserInfo.groups"
-                     :messageList="getUserInfo.chatHistory" />
+                <Tab :userInfo="getUserInfo"
+                     :chatHistories="getChatHistories" />
                 <Menu v-if="menuSeen" />
             </div>
             <div class="shade"
@@ -17,7 +16,7 @@
                  @click="switchOver(false)"></div>
             <!-- end panel -->
             <!-- begin box -->
-            <Box />
+            <Box :chatHistories="getChatHistories" />
             <!-- end box -->
         </div>
     </div>
@@ -52,9 +51,7 @@
         },
         methods: {
             ...mapMutations([
-                'setIsActive',
-                'setUserInfo',
-                'setChatHistories'
+                'setIsActive'
             ]),
             switchOver (bool) {
                 this.menuSeen = bool

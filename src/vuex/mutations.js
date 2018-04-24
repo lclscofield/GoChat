@@ -3,7 +3,11 @@ export const setUserInfo = (state, userInfo) => {
 }
 
 export const setChatHistories = (state, chatHistory) => {
-    state.chatHistories.push(chatHistory)
+    if (!chatHistory) {
+        state.chatHistories = []
+    } else {
+        state.chatHistories.push(chatHistory)
+    }
 }
 
 export const setNowChat = (state, nowChat) => {
