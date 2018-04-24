@@ -18,7 +18,7 @@
         data () {
             return {
                 noMessage: true, // 刚加载时显示空白页
-                showHint: false
+                showHint: true
             }
         }
     }

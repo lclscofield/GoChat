@@ -1,15 +1,35 @@
 <template>
     <div id="group">
         <div class="groupList">
-            <div class="groupItemWrap">
+            <div class="groupItemWrap"
+                 v-if="groups.length">
                 <h3>群组</h3>
-                <div class="groupItem">
+                <div class="groupItem"
+                     v-for="(item, index) in groups"
+                     :key="index"
+                     @dblclick="emitSession(item)">
                     <div class="avatar">
                         <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
                              alt="avatar">
                     </div>
                     <div class="info">
-                        <h4>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</h4>
+                        <h4>{{ item.name }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="groupItemWrap"
+                 v-if="friends.length">
+                <h3>好友</h3>
+                <div class="groupItem"
+                     v-for="(item, index) in friends"
+                     :key="index"
+                     @dblclick="emitSession(item)">
+                    <div class="avatar">
+                        <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+                             alt="avatar">
+                    </div>
+                    <div class="info">
+                        <h4>{{ item.name }}</h4>
                     </div>
                 </div>
             </div>
@@ -18,8 +38,42 @@
 </template>
 
 <script>
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex'
+
     export default {
-        name: 'Group'
+        name: 'Group',
+        props: {
+            friends: {
+                type: Array
+            },
+            groups: {
+                type: Array
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'getUserInfo'
+            ])
+        },
+        methods: {
+            ...mapActions([
+                'addSession',
+                'getMessage'
+            ]),
+            emitSession (item) {
+                console.log(1)
+                if (!this.getUserInfo.chatHistory.length || !this.getUserInfo.chatHistory.some(someone => someone.chatId === item.chatId)) {
+                    console.log(2)
+                    this.addSession(item).then(() => {
+                        console.log('hahaha')
+                    })
+                }
+                this.$emit('emitChat', { item, bool: true })
+            }
+        }
     }
 </script>
 

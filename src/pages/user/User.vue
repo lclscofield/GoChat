@@ -4,18 +4,21 @@
              :class="[ leaveUser ? 'fadeOutDown' : 'fadeInRight' ]">
             <!-- begin panel -->
             <div class="panel">
-                <Info @showMenu="switchOver(true)" />
+                <Info @showMenu="switchOver(true)"
+                      :username="getUserInfo.username" />
                 <Search />
-                <Tab />
+                <Tab :friends="getUserInfo.friends"
+                     :groups="getUserInfo.groups"
+                     :messageList="getUserInfo.chatHistory" />
                 <Menu v-if="menuSeen" />
             </div>
             <div class="shade"
                  v-if="isActive"
                  @click="switchOver(false)"></div>
             <!-- end panel -->
-            <!-- begin messageWindow -->
+            <!-- begin box -->
             <Box />
-            <!-- end messageWindow -->
+            <!-- end box -->
         </div>
     </div>
 </template>
@@ -42,17 +45,24 @@
         },
         computed: {
             ...mapGetters([
-                'isActive'
+                'isActive',
+                'getUserInfo',
+                'getChatHistories'
             ])
         },
         methods: {
             ...mapMutations([
-                'setIsActive'
+                'setIsActive',
+                'setUserInfo',
+                'setChatHistories'
             ]),
             switchOver (bool) {
                 this.menuSeen = bool
                 this.setIsActive(bool)
             }
+        },
+        created () {
+            console.log(this.getUserInfo, this.getChatHistories)
         }
     }
 </script>

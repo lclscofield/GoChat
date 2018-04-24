@@ -29,14 +29,11 @@ app.use(bodyParser.urlencoded({
 app.use(api)
 
 app.get('*', (req, res) => {
-    console.log(123)
     console.log(req.cookies.isLoading)
     const html = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8')
     if (req.path === '/home/login' || req.path === '/home' || !!req.cookies.isLoading) {
-        console.log(789)
         res.send(html)
     } else {
-        console.log(456)
         res.send('404')
     }
 })

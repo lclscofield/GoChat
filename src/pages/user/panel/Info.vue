@@ -6,7 +6,7 @@
         </div>
         <div class="info">
             <h3 class="nickname">
-                <span>hahaha</span>
+                <span>{{ username }}</span>
                 <a href="javascript:;"
                    @click="() => this.$emit('showMenu')">
                     <i></i>
@@ -19,6 +19,11 @@
 <script>
     export default {
         name: 'Info',
+        props: {
+            username: {
+                type: String
+            }
+        },
         methods: {}
     }
 </script>

@@ -1,14 +1,17 @@
 <template>
     <div id="messageList">
         <div class="chatList">
-            <div class="chatItem">
+            <div class="chatItem"
+                 v-for="(item, index) in messageList"
+                 :key="index"
+                 @click="$emit('emitChat', { item, bool: true })">
                 <div class="avatar">
                     <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
                          alt="avatar">
                 </div>
                 <div class="info">
                     <h3 class="nickname">
-                        <span>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</span>
+                        <span>{{ item.name }}</span>
                     </h3>
                 </div>
             </div>
@@ -18,7 +21,13 @@
 
 <script>
     export default {
-        name: 'MessageList'
+        name: 'MessageList',
+        props: {
+            messageList: {
+                type: Array
+            }
+        },
+        methods: {}
     }
 </script>
 

@@ -1,6 +1,7 @@
 <template>
     <div id="boxHead">
-        <div class="chatRoomMembersWrap">
+        <div class="chatRoomMembersWrap"
+             v-if="getNowChat">
             <div class="membersWrap"
                  v-if="seen">
                 <div class="members">
@@ -11,17 +12,18 @@
                         <div class="member">
                             <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
                                  alt="avatar">
-                            <p class="nickname">haha</p>
+                            <p class="nickname">{{ getNowChat.name }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="titleWrap">
+        <div class="titleWrap"
+             v-if="getNowChat">
             <div class="title"
                  :class="{ active: seen }"
                  @click="showMembers()">
-                <a class="titleName">haha</a>
+                <a class="titleName">{{ getNowChat.name }}</a>
                 <i></i>
             </div>
         </div>
@@ -49,7 +51,8 @@
         },
         computed: {
             ...mapGetters([
-                'isActive'
+                'isActive',
+                'getNowChat'
             ])
         },
         methods: {
