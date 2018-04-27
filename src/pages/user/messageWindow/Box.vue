@@ -2,10 +2,12 @@
     <div id="box">
         <!-- begin head -->
         <BoxHead v-if="Object.keys(getNowChat).length"
-                 :nowChat="getNowChat" />
+                 :nowChat="getNowChat"
+                 :chatHistory="chatHistory" />
         <!-- end head -->
         <!-- begin body -->
-        <BoxBody :chatHistory="chatHistory" />
+        <BoxBody :chatHistory="chatHistory"
+                 :nowChat="getNowChat" />
         <!-- end body -->
         <!-- begin input -->
         <BoxInput />
@@ -34,15 +36,12 @@
                 'getNowChat'
             ]),
             chatHistory () {
-                this.chatHistories.forEach(item => {
-                    if (this.getNowChat.chatId === item.chatId) {
-                        return item
+                for (let i = 0; i < this.chatHistories.length; i++) {
+                    if (this.getNowChat.chatId === this.chatHistories[i]._id) {
+                        return this.chatHistories[i]
                     }
-                })
+                }
             }
-        },
-        created () {
-            console.log(this.getNowChat, this.chatHistories)
         }
     }
 </script>

@@ -4,10 +4,10 @@
             <div class="message"></div>
         </div>
         <div class="messageEmpty"
-             v-if="noMessage">
-            <i v-if="showHint"></i>
-            <p v-if="!showHint">暂时没有新消息</p>
-            <p v-if="showHint">未选择聊天</p>
+             v-if="chatHistory ? !chatHistory.chat.length : true">
+            <i v-if="!chatHistory"></i>
+            <p v-if="chatHistory ? !chatHistory.chat.length : false">暂时没有新消息</p>
+            <p v-if="!chatHistory">未选择聊天</p>
         </div>
     </div>
 </template>
@@ -15,9 +15,9 @@
 <script>
     export default {
         name: 'BoxBody',
+        props: ['nowChat', 'chatHistory'],
         data () {
             return {
-                noMessage: true, // 刚加载时显示空白页
                 showHint: true
             }
         }

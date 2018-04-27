@@ -8,10 +8,12 @@
                         <div class="addMember">
                             <i></i>
                         </div>
-                        <div class="member">
+                        <div class="member"
+                             v-for="(item, index) in chatHistory.member"
+                             :key="index">
                             <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
                                  alt="avatar">
-                            <p class="nickname">{{ nowChat.name }}</p>
+                            <p class="nickname">{{ item.name }}</p>
                         </div>
                     </div>
                 </div>
@@ -36,7 +38,7 @@
 
     export default {
         name: 'BoxHead',
-        props: ['nowChat'],
+        props: ['nowChat', 'chatHistory'],
         data () {
             return {
                 seen: false // 显示成员列表
