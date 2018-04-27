@@ -53,12 +53,12 @@ export const addSession = ({ commit, state }, item) => {
 }
 
 // 获取聊天纪录
-export const getMessage = ({ commit }, chatId) => {
+export const getMessage = ({ commit }, item) => {
     return new Promise((resolve, reject) => {
         http({
             method: 'post',
             url: '/api/getMessage',
-            data: chatId
+            data: item
         }).then((res) => {
             commit('setChatHistories', res.data)
             sessionStorage.setItem('chatHistories', JSON.stringify(res.data))

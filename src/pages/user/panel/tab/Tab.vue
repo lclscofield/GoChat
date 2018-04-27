@@ -66,8 +66,8 @@
             },
             emitMessage (obj) {
                 this.show(obj.bool)
-                if (!this.chatHistories.length || !this.chatHistories.some(someone => someone.chatId === obj.item.chatId)) {
-                    this.getMessage(obj.item.chatId)
+                if (!this.chatHistories.length || !this.chatHistories.some(someone => someone._id === obj.item.chatId)) {
+                    this.getMessage(obj.item)
                 }
                 this.setNowChat(obj.item)
             }

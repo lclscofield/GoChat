@@ -87,7 +87,7 @@ router.post('/api/addSession', (req, res) => {
 
 // 拿到聊天记录
 router.post('/api/getMessage', (req, res) => {
-    const chatId = req.body
+    const chatId = req.body.chatId
     console.log(4)
     console.log(req.body)
     db.ChatHistory.findById(chatId, (err, doc) => {
