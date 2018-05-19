@@ -47,7 +47,7 @@ router.post('/api/login', (req, res) => {
                 res.send({ errType: 'password' })
                 break
             default:
-                res.cookie('isLoading', doc._id)
+                res.cookie('isLoading', doc._id, { path: `/home/user/${doc.username}` })
                 res.send({
                     username: doc.username,
                     phone: doc.phone,
@@ -63,9 +63,7 @@ router.post('/api/login', (req, res) => {
 // 添加会话状态
 router.post('/api/addSession', (req, res) => {
     const item = req.body
-    console.log(req.body)
     console.log(req.cookies.isLoading)
-    console.log(1)
     db.UserInfo.update({
         _id: req.cookies.isLoading
     }, { $addToSet: { chatHistory: { chatId: item.chatId, name: item.name } } }, err => {
@@ -85,10 +83,11 @@ router.post('/api/addSession', (req, res) => {
     })
 })
 
-// 拿到聊天记录
+// 获取聊天记录
 router.post('/api/getMessage', (req, res) => {
     const chatId = req.body.chatId
     console.log(4)
+    console.log(req.query)
     console.log(req.body)
     db.ChatHistory.findById(chatId, (err, doc) => {
         switch (true) {
@@ -100,6 +99,9 @@ router.post('/api/getMessage', (req, res) => {
                 break
             default:
                 console.log(5)
+                if (doc.chat.length > 50) {
+                    doc.chat = doc.chat.slice(doc.chat.length - 50)
+                }
                 res.send(doc)
         }
     })

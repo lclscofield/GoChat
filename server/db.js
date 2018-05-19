@@ -30,46 +30,13 @@ const ChatHistory = new Schema({
     chat: []
 })
 
-// // 用户信息数据格式
-// const UserSchema = new Schema({
-//     username: String, // 定义一个属性 username，类型为 String
-//     password: String,
-//     phone: String,
-//     friends: [{
-//         userId: 'xxx', // 这个 id 是 UserInfo 的默认 _id
-//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
-//         name: 'xxx'
-//     }],
-//     groups: [{
-//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
-//         name: 'xxx'
-//     }],
-//     chatHistory: [{ // 保存会话状态
-//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
-//         name: 'xxx' // friends 或 groups 的 name
-//     }]
-// })
-// // 聊天记录数据格式
-// const ChatHistory = new Schema({
-//     member: [{
-//         userId: 'xxx', // 这个 id 是 UserInfo 的默认 _id
-//         name: 'xxx'
-//     }, {
-//         userId: 'hahaha', // 这个 id 是 UserInfo 的默认 _id
-//         name: 'hahaha'
-//     }], // 聊天纪录成员
-//     chat: [{
-//         time: '1231651616', // 距离2018.4.21 00:00:00 的时间差
-//         username: 'xxx',
-//         content: 'xxxxx'
-//     }]
-// })
-
 // mongoose.model方法将格式分配给指定的数据集
 const Models = {
     UserInfo: mongoose.model('UserInfo', UserSchema),
     ChatHistory: mongoose.model('ChatHistory', ChatHistory)
 }
+
+module.exports = Models
 
 // function addFriend () {
 //     Models.UserInfo.findOne({ username: 'lcl' }, (err, doc) => {
@@ -115,4 +82,37 @@ const Models = {
 // }
 // find()
 
-module.exports = Models
+// // 用户信息数据格式
+// const UserSchema = new Schema({
+//     username: String, // 定义一个属性 username，类型为 String
+//     password: String,
+//     phone: String,
+//     friends: [{
+//         userId: 'xxx', // 这个 id 是 UserInfo 的默认 _id
+//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
+//         name: 'xxx'
+//     }],
+//     groups: [{
+//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
+//         name: 'xxx'
+//     }],
+//     chatHistory: [{ // 保存会话状态
+//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
+//         name: 'xxx' // friends 或 groups 的 name
+//     }]
+// })
+// // 聊天记录数据格式
+// const ChatHistory = new Schema({
+//     member: [{
+//         userId: 'xxx', // 这个 id 是 UserInfo 的默认 _id
+//         name: 'xxx'
+//     }, {
+//         userId: 'hahaha', // 这个 id 是 UserInfo 的默认 _id
+//         name: 'hahaha'
+//     }], // 聊天纪录成员
+//     chat: [{
+//         time: '1231651616', // 距离2018.4.21 00:00:00 的时间差
+//         username: 'xxx',
+//         content: 'xxxxx'
+//     }]
+// })

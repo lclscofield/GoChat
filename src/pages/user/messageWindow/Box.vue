@@ -7,10 +7,13 @@
         <!-- end head -->
         <!-- begin body -->
         <BoxBody :chatHistory="chatHistory"
-                 :nowChat="getNowChat" />
+                 :nowChat="getNowChat"
+                 :socket="getSocket" />
         <!-- end body -->
         <!-- begin input -->
-        <BoxInput />
+        <BoxInput v-if="Object.keys(getNowChat).length"
+                  :nowChat="getNowChat"
+                  :socket="getSocket" />
         <!-- end input -->
     </div>
 </template>
@@ -33,7 +36,8 @@
         },
         computed: {
             ...mapGetters([
-                'getNowChat'
+                'getNowChat',
+                'getSocket'
             ]),
             chatHistory () {
                 for (let i = 0; i < this.chatHistories.length; i++) {

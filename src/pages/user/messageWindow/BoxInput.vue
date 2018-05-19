@@ -7,19 +7,78 @@
         </div>
         <!-- 输入框 -->
         <div class="content">
-            <pre contenteditable="plaintext-only"></pre>
+            <pre contenteditable="plaintext-only"
+                 ref="input"
+                 @keyup.shift.enter="sendMsg"></pre>
         </div>
         <!-- 发送键 -->
         <div class="action">
-            <span>按下Cmd/Shift+Enter换行</span>
-            <a href="javascript:;">发送</a>
+            <span>按下Cmd/Shift+Enter发送</span>
+            <a href="javascript:;"
+               @click="sendMsg">发送</a>
         </div>
     </div>
 </template>
 
 <script>
+    import {
+        mapGetters,
+        mapMutations
+    } from 'vuex'
+    import io from 'socket.io-client'
+
     export default {
-        name: 'BoxInput'
+        name: 'BoxInput',
+        props: ['nowChat', 'socket'],
+        data () {
+            return {
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'getUserInfo'
+            ])
+        },
+        methods: {
+            ...mapMutations([
+                'setSocket'
+            ]),
+            sendMsg () { // 发送消息
+                let data = {
+                    msg: this.$refs.input.innerText.trim(),
+                    id: this.nowChat.chatId,
+                    myId: this.getUserInfo._id,
+                    date: this.dateFormat('yyyy-MM-dd hh:mm:ss')
+                }
+                if (!this.socket) {
+                    console.log(123)
+                    this.setSocket(io.connect('http://localhost:3000'))
+                }
+                if (data.msg) {
+                    console.log('send', data)
+                    this.socket.emit('chat message', data)
+                }
+                this.$refs.input.innerText = ''
+            },
+            dateFormat (format) {
+                let date = new Date()
+                let args = {
+                    'M+': date.getMonth() + 1,
+                    'd+': date.getDate(),
+                    'h+': date.getHours(),
+                    'm+': date.getMinutes(),
+                    's+': date.getSeconds(),
+                    'q+': Math.floor((date.getMonth() + 3) / 3), // quarter
+                    'S': date.getMilliseconds()
+                }
+                if (/(y+)/.test(format)) { format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length)) }
+                for (let i in args) {
+                    let n = args[i]
+                    if (new RegExp('(' + i + ')').test(format)) { format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? n : ('00' + n).substr(('' + n).length)) }
+                }
+                return format
+            }
+        }
     }
 </script>
 
@@ -60,7 +119,7 @@
           font-family: inherit;
           white-space: pre-wrap;
           word-break: normal;
-          user-modify: read-write-plaintext-only
+          -webkit-user-modify: read-write-plaintext-only;
         }
       }
 

@@ -1,7 +1,8 @@
 export default {
     userInfo: {}, // 用户信息
     chatHistories: [], // 聊天纪录
-    nowChat: {}, // 选中的聊天对象
+    nowChat: null, // 选中的聊天对象
+    socket: null, // socket 连接
     isActive: false, // 控制罩层
     showSignUp: false // 控制 signUp 页面显示
 }

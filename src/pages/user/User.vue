@@ -51,7 +51,10 @@
         },
         methods: {
             ...mapMutations([
-                'setIsActive'
+                'setIsActive',
+                'setUserInfo',
+                'setChatHistories',
+                'setNowChat'
             ]),
             switchOver (bool) {
                 this.menuSeen = bool
@@ -60,6 +63,15 @@
         },
         created () {
             console.log(this.getUserInfo, this.getChatHistories)
+            if (sessionStorage.getItem('userInfo')) {
+                this.setUserInfo(JSON.parse(sessionStorage.getItem('userInfo')))
+            }
+            if (sessionStorage.getItem('chatHistories')) {
+                this.setChatHistories(JSON.parse(sessionStorage.getItem('chatHistories')))
+            }
+            if (sessionStorage.getItem('nowChat')) {
+                this.setNowChat(JSON.parse(sessionStorage.getItem('nowChat')))
+            }
         }
     }
 </script>

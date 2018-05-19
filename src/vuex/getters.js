@@ -10,6 +10,10 @@ export function getNowChat (state) {
     return state.nowChat
 }
 
+export function getSocket (state) {
+    return state.socket
+}
+
 export function isActive (state) {
     return state.isActive
 }

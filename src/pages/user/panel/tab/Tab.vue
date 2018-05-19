@@ -70,6 +70,7 @@
                     this.getMessage(obj.item)
                 }
                 this.setNowChat(obj.item)
+                sessionStorage.setItem('nowChat', JSON.stringify(obj.item))
             }
         }
     }
