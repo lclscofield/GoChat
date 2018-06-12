@@ -4,7 +4,9 @@ export default {
     nowChat: null, // 选中的聊天对象
     socket: null, // socket 连接
     isActive: false, // 控制罩层
-    showSignUp: false // 控制 signUp 页面显示
+    showSignUp: false, // 控制 signUp 页面显示
+    searchHint: null, // 搜索提示
+    searchSwitch: false // 搜索切换
 }
 // userInfo: {
 //     username: 'lcl',

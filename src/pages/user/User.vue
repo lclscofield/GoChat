@@ -9,7 +9,8 @@
                 <Search />
                 <Tab :userInfo="getUserInfo"
                      :chatHistories="getChatHistories" />
-                <Menu v-if="menuSeen" />
+                <Menu v-if="menuSeen"
+                      @exit="leave" />
             </div>
             <div class="shade"
                  v-if="isActive"
@@ -59,6 +60,14 @@
             switchOver (bool) {
                 this.menuSeen = bool
                 this.setIsActive(bool)
+            },
+            leave (bool) {
+                this.leaveUser = bool
+                setTimeout(() => {
+                    this.$router.push({
+                        name: 'login'
+                    })
+                }, 500)
             }
         },
         created () {

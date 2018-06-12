@@ -11,7 +11,7 @@
                         <div class="member"
                              v-for="(item, index) in chatHistory.member"
                              :key="index">
-                            <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+                            <img :src="`https://source.unsplash.com/user/${item.name}`"
                                  alt="avatar">
                             <p class="nickname">{{ item.name }}</p>
                         </div>

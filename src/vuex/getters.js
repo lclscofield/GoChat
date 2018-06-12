@@ -21,3 +21,11 @@ export function isActive (state) {
 export function showSignUp (state) {
     return state.showSignUp
 }
+
+export function searchHint (state) {
+    return state.searchHint
+}
+
+export function searchSwitch (state) {
+    return state.searchSwitch
+}

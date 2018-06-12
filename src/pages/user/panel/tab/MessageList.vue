@@ -4,9 +4,10 @@
             <div class="chatItem"
                  v-for="(item, index) in messageList"
                  :key="index"
+                 :class="{ me: item.chatId === getNowChat.chatId }"
                  @click="$emit('emitChat', { item, bool: true })">
                 <div class="avatar">
-                    <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+                    <img :src="`https://source.unsplash.com/user/${item.name}`"
                          alt="avatar">
                 </div>
                 <div class="info">
@@ -20,6 +21,11 @@
 </template>
 
 <script>
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex'
+
     export default {
         name: 'MessageList',
         props: {
@@ -27,7 +33,32 @@
                 type: Array
             }
         },
-        methods: {}
+        computed: {
+            ...mapGetters([
+                'getNowChat',
+                'getUserInfo',
+                'searchHint',
+                'searchSwitch'
+            ])
+        },
+        watch: {
+            searchSwitch () {
+                console.log(123)
+                this.emitSession(this.searchHint)
+            }
+        },
+        methods: {
+            ...mapActions([
+                'addSession',
+                'getMessage'
+            ]),
+            emitSession (item) {
+                if (!this.getUserInfo.chatHistory.length || !this.getUserInfo.chatHistory.some(someone => someone.chatId === item.chatId)) {
+                    this.addSession(item)
+                }
+                this.$emit('emitChat', { item, bool: true })
+            }
+        }
     }
 </script>
 
@@ -50,6 +81,9 @@
           border-bottom: 1px solid #9bb8ee;
           cursor: pointer;
 
+          &.me {
+            background: #7ea6f0;
+          }
           > .avatar {
             float: left;
             margin-right: 10px;

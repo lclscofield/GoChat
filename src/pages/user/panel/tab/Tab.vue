@@ -34,6 +34,7 @@
     import MessageList from './MessageList'
     import Group from './Group'
     import {
+        mapGetters,
         mapMutations,
         mapActions
     } from 'vuex'
@@ -54,6 +55,19 @@
                 isActive: true
             }
         },
+        computed: {
+            ...mapGetters([
+                'getNowChat',
+                'getSocket'
+            ]),
+            chatHistory () {
+                for (let i = 0; i < this.chatHistories.length; i++) {
+                    if (this.getNowChat.chatId === this.chatHistories[i]._id) {
+                        return this.chatHistories[i]
+                    }
+                }
+            }
+        },
         methods: {
             ...mapMutations([
                 'setNowChat'
@@ -67,7 +81,20 @@
             emitMessage (obj) {
                 this.show(obj.bool)
                 if (!this.chatHistories.length || !this.chatHistories.some(someone => someone._id === obj.item.chatId)) {
-                    this.getMessage(obj.item)
+                    this.getMessage(obj.item).then(() => {
+                        this.getSocket.on(`${this.getNowChat.chatId}`, data => {
+                            console.log('on', data)
+                            if (this.chatHistory.chat.length >= 50) {
+                                this.chatHistory.chat.shift()
+                                this.chatHistory.chat.push(data)
+                            } else {
+                                this.chatHistory.chat.push(data)
+                            }
+                        })
+                        // setTimeout(() => {
+                        //     this.$refs.boxBody.scrollTop = this.$refs.boxBody.scrollHeight
+                        // })
+                    })
                 }
                 this.setNowChat(obj.item)
                 sessionStorage.setItem('nowChat', JSON.stringify(obj.item))

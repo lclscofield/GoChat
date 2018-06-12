@@ -63,20 +63,17 @@ router.post('/api/login', (req, res) => {
 // 添加会话状态
 router.post('/api/addSession', (req, res) => {
     const item = req.body
-    console.log(req.cookies.isLoading)
+    const isLoading = req.query.id
     db.UserInfo.update({
-        _id: req.cookies.isLoading
+        _id: isLoading
     }, { $addToSet: { chatHistory: { chatId: item.chatId, name: item.name } } }, err => {
         if (err) console.log(err)
-        db.UserInfo.findById(req.cookies.isLoading, { password: 0 }, (err, doc) => {
-            console.log(2)
+        db.UserInfo.findById(isLoading, { password: 0 }, (err, doc) => {
             switch (true) {
                 case !!err:
                     console.log(err)
                     break
                 default:
-                    console.log(2)
-                    console.log(doc)
                     res.send(doc)
             }
         })
@@ -86,9 +83,6 @@ router.post('/api/addSession', (req, res) => {
 // 获取聊天记录
 router.post('/api/getMessage', (req, res) => {
     const chatId = req.body.chatId
-    console.log(4)
-    console.log(req.query)
-    console.log(req.body)
     db.ChatHistory.findById(chatId, (err, doc) => {
         switch (true) {
             case !!err:
@@ -103,6 +97,70 @@ router.post('/api/getMessage', (req, res) => {
                     doc.chat = doc.chat.slice(doc.chat.length - 50)
                 }
                 res.send(doc)
+        }
+    })
+})
+
+// 添加好友
+router.post('/api/addFriend', (req, res) => {
+    const account = req.body.account
+    const isLoading = req.query.id
+    db.UserInfo.findOne({ $or: [{ username: account }, { phone: account }] }, (err, doc1) => {
+        switch (true) {
+            case !!err:
+                console.log(err)
+                break
+            case !doc1:
+                res.send({ errType: 'account' })
+                break
+            case !!doc1:
+                db.UserInfo.findById(isLoading, (err, doc2) => {
+                    switch (true) {
+                        case !!err:
+                            console.log(err)
+                            break
+                        case !doc2:
+                            console.log('error')
+                            break
+                        case !!doc2:
+                            console.log(1)
+                            if (doc2.friends.some(item => {
+                                return item.userId + '' === doc1._id + ''
+                            })) {
+                                console.log(2)
+                                res.send({ errType: 'added' })
+                            } else {
+                                console.log(3)
+                                db.ChatHistory.create({
+                                    member: [{
+                                        userId: doc1._id, // 这个 id 是 UserInfo 的默认 _id
+                                        name: doc1.username
+                                    }, {
+                                        userId: doc2._id, // 这个 id 是 UserInfo 的默认 _id
+                                        name: doc2.username
+                                    }], // 聊天纪录成员
+                                    chat: []
+                                }, (err, newDoc) => {
+                                    if (err) {
+                                        console.log(err)
+                                    }
+                                    doc1.friends.push({
+                                        name: doc2.username,
+                                        userId: doc2._id,
+                                        chatId: newDoc._id
+                                    })
+                                    doc2.friends.push({
+                                        name: doc1.username,
+                                        userId: doc1._id,
+                                        chatId: newDoc._id
+                                    })
+                                    doc1.save()
+                                    doc2.save()
+                                    res.send(doc2.friends)
+                                })
+                            }
+                    }
+                })
         }
     })
 })

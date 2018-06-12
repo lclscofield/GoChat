@@ -111,8 +111,9 @@ module.exports = Models
 //         name: 'hahaha'
 //     }], // 聊天纪录成员
 //     chat: [{
-//         time: '1231651616', // 距离2018.4.21 00:00:00 的时间差
-//         username: 'xxx',
-//         content: 'xxxxx'
+//         date:"2018-05-23 15:53:18",
+//         id:"5aded1cd2e6e8f3598f80aa4", // 聊天信息文档 _id
+//         msg:"789",
+//         myId:"5adc89e65d7daa3e0cd55c0b"
 //     }]
 // })

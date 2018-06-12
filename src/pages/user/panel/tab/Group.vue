@@ -9,7 +9,7 @@
                      :key="index"
                      @dblclick="emitSession(item)">
                     <div class="avatar">
-                        <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+                        <img :src="`https://source.unsplash.com/user/${item.name}`"
                              alt="avatar">
                     </div>
                     <div class="info">
@@ -25,7 +25,7 @@
                      :key="index"
                      @dblclick="emitSession(item)">
                     <div class="avatar">
-                        <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+                        <img :src="`https://source.unsplash.com/user/${item.name}`"
                              alt="avatar">
                     </div>
                     <div class="info">
@@ -53,10 +53,22 @@
                 type: Array
             }
         },
+        data () {
+            return {
+            }
+        },
         computed: {
             ...mapGetters([
-                'getUserInfo'
+                'getUserInfo',
+                'searchHint',
+                'searchSwitch'
             ])
+        },
+        watch: {
+            searchSwitch () {
+                console.log(123)
+                this.emitSession(this.searchHint)
+            }
         },
         methods: {
             ...mapActions([

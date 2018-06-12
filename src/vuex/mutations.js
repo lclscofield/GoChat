@@ -27,3 +27,11 @@ export const setIsActive = (state, bool) => {
 export const setShowSignUp = (state, bool) => {
     state.showSignUp = bool
 }
+
+export const setSearchHint = (state, obj) => {
+    state.searchHint = obj
+}
+
+export const setSearchSwitch = (state, bool) => {
+    state.searchSwitch = bool
+}

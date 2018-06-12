@@ -9,7 +9,7 @@
                  :class="{me : item.myId === getUserInfo._id}">
                 <div class="messageTime"
                      v-if="!now">{{ item.date }}</div>
-                <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+                <img :src="`https://source.unsplash.com/user/${item.name}`"
                      alt="avatar">
                 <div class="content">
                     <div class="bubble">{{ item.msg }}</div>
@@ -41,9 +41,17 @@
         computed: {
             ...mapGetters([
                 'getUserInfo'
-            ])
+            ]),
+            len () {
+                return this.chatHistory ? this.chatHistory.chat.length : 0
+            }
         },
         watch: {
+            len () {
+                setTimeout(() => {
+                    this.$refs.boxBody.scrollTop = this.$refs.boxBody.scrollHeight
+                })
+            },
             nowChat () {
                 let time = setInterval(() => {
                     this.$refs.boxBody.scrollTop = this.$refs.boxBody.scrollHeight - this.$refs.boxBody.clientHeight
@@ -55,23 +63,23 @@
                 //     this.now = false
                 // }, 60000)
                 // 接收消息
-                this.socket.on(`${this.nowChat.chatId}`, data => {
-                    console.log('on', data)
-                    if (this.chatHistory.chat.length >= 50) {
-                        this.chatHistory.chat.shift()
-                        this.chatHistory.chat.push(data)
-                    } else {
-                        this.chatHistory.chat.push(data)
-                    }
-                    // this.now = true
-                    // clearTimeout(timer)
-                    // timer = setTimeout(() => {
-                    //     this.now = false
-                    // }, 60000)
-                    setTimeout(() => {
-                        this.$refs.boxBody.scrollTop = this.$refs.boxBody.scrollHeight
-                    })
-                })
+                // this.socket.on(`${this.nowChat.chatId}`, data => {
+                //     console.log('on', data)
+                //     if (this.chatHistory.chat.length >= 50) {
+                //         this.chatHistory.chat.shift()
+                //         this.chatHistory.chat.push(data)
+                //     } else {
+                //         this.chatHistory.chat.push(data)
+                //     }
+                //     // this.now = true
+                //     // clearTimeout(timer)
+                //     // timer = setTimeout(() => {
+                //     //     this.now = false
+                //     // }, 60000)
+                //     setTimeout(() => {
+                //         this.$refs.boxBody.scrollTop = this.$refs.boxBody.scrollHeight
+                //     })
+                // })
             }
         },
         methods: {

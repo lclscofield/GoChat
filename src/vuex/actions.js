@@ -39,10 +39,12 @@ export const loginVerify = ({ commit }, postData) => {
             url: '/api/login',
             data: postData
         }).then(res => {
-            commit('setSocket', io.connect('http://localhost:3000'))
-            commit('setUserInfo', res.data)
-            sessionStorage.setItem('userInfo', JSON.stringify(res.data))
-            resolve(res.data)
+            if (!res.hasOwnProperty('errType')) {
+                commit('setSocket', io.connect('http://localhost:3000'))
+                commit('setUserInfo', res.data)
+                sessionStorage.setItem('userInfo', JSON.stringify(res.data))
+                resolve(res.data)
+            }
         }).catch(err => {
             console.log(err)
         })
@@ -50,11 +52,14 @@ export const loginVerify = ({ commit }, postData) => {
 }
 
 // 添加会话状态
-export const addSession = ({ commit }, item) => {
+export const addSession = ({ commit, state }, item) => {
     return new Promise((resolve, reject) => {
         http({
             method: 'post',
             url: '/api/addSession',
+            params: {
+                id: state.userInfo._id
+            },
             data: item
         }).then(res => {
             commit('setUserInfo', res.data)
@@ -72,9 +77,6 @@ export const getMessage = ({ commit, state }, item) => {
         http({
             method: 'post',
             url: '/api/getMessage',
-            params: {
-                id: getCookie('isLoading')
-            },
             data: item
         }).then((res) => {
             commit('setChatHistories', res.data)
@@ -82,6 +84,32 @@ export const getMessage = ({ commit, state }, item) => {
             resolve(res.data)
         }).catch((err) => {
             console.log(err)
+        })
+    })
+}
+
+// 添加好友
+export const addFriend = ({ commit, state }, postData) => {
+    return new Promise((resolve, reject) => {
+        http({
+            method: 'post',
+            url: '/api/addFriend',
+            params: {
+                id: state.userInfo._id
+            },
+            data: postData
+        }).then((res) => {
+            if (!res.data.hasOwnProperty('errType')) {
+                console.log(res.data)
+                let user = state.userInfo
+                user.friends = res.data
+                commit('setUserInfo', user)
+                sessionStorage.setItem('userInfo', JSON.stringify(res.data))
+            }
+            resolve(res.data)
+        }).catch((err) => {
+            console.log(err)
+            reject(err)
         })
     })
 }

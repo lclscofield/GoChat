@@ -1,7 +1,7 @@
 <template>
     <div id="info">
         <div class="avatar">
-            <img src="//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2KriyDK.png"
+            <img :src="`https://source.unsplash.com/user/123`"
                  alt="avatar">
         </div>
         <div class="info">

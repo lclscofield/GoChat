@@ -9,13 +9,13 @@
         <div class="content">
             <pre contenteditable="plaintext-only"
                  ref="input"
-                 @keyup.shift.enter="sendMsg"></pre>
+                 @keyup.shift.enter="sendMsg()"></pre>
         </div>
         <!-- 发送键 -->
         <div class="action">
             <span>按下Cmd/Shift+Enter发送</span>
             <a href="javascript:;"
-               @click="sendMsg">发送</a>
+               @click="sendMsg()">发送</a>
         </div>
     </div>
 </template>
