@@ -34,7 +34,6 @@ router.post('/api/signUp', (req, res) => {
 // 登录
 router.post('/api/login', (req, res) => {
     const { account, password } = req.body
-    console.log(req.body)
     db.UserInfo.findOne({ $or: [{ username: account }, { phone: account }] }, (err, doc) => {
         switch (true) {
             case !!err:
@@ -92,7 +91,6 @@ router.post('/api/getMessage', (req, res) => {
                 console.log('拿不到聊天记录')
                 break
             default:
-                console.log(5)
                 if (doc.chat.length > 50) {
                     doc.chat = doc.chat.slice(doc.chat.length - 50)
                 }
@@ -123,14 +121,11 @@ router.post('/api/addFriend', (req, res) => {
                             console.log('error')
                             break
                         case !!doc2:
-                            console.log(1)
                             if (doc2.friends.some(item => {
                                 return item.userId + '' === doc1._id + ''
                             })) {
-                                console.log(2)
                                 res.send({ errType: 'added' })
                             } else {
-                                console.log(3)
                                 db.ChatHistory.create({
                                     member: [{
                                         userId: doc1._id, // 这个 id 是 UserInfo 的默认 _id
@@ -164,5 +159,106 @@ router.post('/api/addFriend', (req, res) => {
         }
     })
 })
+
+// 添加群组成员
+router.post('/api/setGroup', (req, res) => {
+    const id = req.query.id
+    const { str, nowChat } = req.body
+    let name
+    if (str === 'set') {
+        console.log(1)
+        let arr = []
+        let docMe, docYou, docNew
+        // 转移聊天记录
+        db.ChatHistory.findById(nowChat.chatId, (err, doc) => {
+            if (err) {
+                console.log(err)
+            }
+            arr = doc.chat
+        })
+        docMe = findIdName(id)
+        docYou = findIdName(nowChat.userId)
+        docNew = findIdName(req.body.item.userId)
+        setTimeout(() => {
+            console.log(docMe, docYou, docNew)
+            db.ChatHistory.create({
+                member: [docMe, docYou, docNew], // 聊天纪录成员
+                chat: arr
+            }, (err, newDoc) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.log(newDoc.member)
+                name = newDoc.member.map(item => {
+                    return item.name
+                }).join(',')
+                updateGroups(id, newDoc._id, name)
+                updateGroups(nowChat.userId, newDoc._id, name)
+                updateGroups(req.body.item.userId, newDoc._id, name)
+                res.send({
+                    chatId: newDoc._id,
+                    name
+                })
+            })
+        }, 5000)
+    } else if (str === 'add') {
+        console.log(2)
+        db.ChatHistory.findById(nowChat.chatId, (err, doc) => {
+            if (err) {
+                console.log(err)
+            }
+            let newMember = findIdName(req.body.item.userId)
+            doc.member.push(newMember)
+            doc.save()
+            console.log(doc.member.map(item => {
+                return item.name
+            }).join(','))
+            name = doc.member.map(item => {
+                return item.name
+            }).join(',')
+            doc.member.forEach(item => {
+                updateGroups(item.chatId, doc._id, name)
+            })
+            db.UserInfo.findById(id, (err, docMe) => {
+                if (err) {
+                    console.log(err)
+                }
+                res.send({ groups: docMe.groups, doc })
+            })
+        })
+    }
+})
+
+function findIdName (id) {
+    let item
+    db.UserInfo.findById(id, (err, doc) => {
+        if (err) {
+            console.log(err)
+        }
+        item = { userId: id, name: doc.username }
+    }).then(() => {
+        return item
+    })
+}
+
+function updateGroups (id, newId, name) {
+    db.UserInfo.findById(id, (err, doc) => {
+        if (err) {
+            console.log(err)
+        }
+        if (!doc.groups.some(item => {
+            if (item.chatId + '' === newId) {
+                item.name = name
+            }
+            return item.chatId + '' === newId
+        })) {
+            doc.groups.push({
+                chatId: newId,
+                name
+            })
+        }
+        doc.save()
+    })
+}
 
 module.exports = router

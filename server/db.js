@@ -92,13 +92,9 @@ module.exports = Models
 //         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
 //         name: 'xxx'
 //     }],
-//     groups: [{
-//         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
-//         name: 'xxx'
-//     }],
 //     chatHistory: [{ // 保存会话状态
 //         chatId: 'xxx', // 这个 id 是 ChatHistory 的默认 _id
-//         name: 'xxx' // friends 或 groups 的 name
+//         name: 'xxx' // friends 的 name
 //     }]
 // })
 // // 聊天记录数据格式

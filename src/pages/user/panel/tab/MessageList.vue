@@ -82,8 +82,16 @@
           cursor: pointer;
 
           &.me {
-            background: #7ea6f0;
+            background: #4681f0;
+            &:hover {
+              background: #4681f0;
+            }
           }
+
+          &:hover {
+            background: #7fa7f1;
+          }
+
           > .avatar {
             float: left;
             margin-right: 10px;

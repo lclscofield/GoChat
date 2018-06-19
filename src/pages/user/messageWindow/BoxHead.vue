@@ -5,9 +5,10 @@
                  v-if="seen">
                 <div class="members">
                     <div class="membersInner">
-                        <div class="addMember">
+                        <!-- <div class="addMember"
+                             @click="showFriends()">
                             <i></i>
-                        </div>
+                        </div> -->
                         <div class="member"
                              v-for="(item, index) in chatHistory.member"
                              :key="index">
@@ -16,6 +17,14 @@
                             <p class="nickname">{{ item.name }}</p>
                         </div>
                     </div>
+                </div>
+                <div class="addFriend"
+                     v-if="showOtherFriend">
+                    <ul>
+                        <li v-for="(item, index) in otherFriends"
+                            :key="index"
+                            @click="addMember(item)">{{ item.name }}</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -33,7 +42,8 @@
 <script>
     import {
         mapGetters,
-        mapMutations
+        mapMutations,
+        mapActions
     } from 'vuex'
 
     export default {
@@ -41,7 +51,9 @@
         props: ['nowChat', 'chatHistory'],
         data () {
             return {
-                seen: false // 显示成员列表
+                seen: false, // 显示成员列表
+                showOtherFriend: false, // 显示其他好友
+                otherFriends: [] // 其他好友
             }
         },
         created () {
@@ -51,21 +63,52 @@
             isActive () {
                 if (!this.isActive) {
                     this.seen = this.isActive
+                    this.showOtherFriend = this.isActive
                 }
             }
         },
         computed: {
             ...mapGetters([
-                'isActive'
+                'isActive',
+                'getUserInfo'
             ])
         },
         methods: {
             ...mapMutations([
                 'setIsActive'
             ]),
+            ...mapActions([
+                'setGroup'
+            ]),
             showMembers () {
                 this.setIsActive(true)
                 this.seen = true
+            },
+            showFriends () {
+                this.showOtherFriend = true
+                this.otherFriends = this.getUserInfo.friends.filter(item => {
+                    return !this.chatHistory.member.some(item2 => {
+                        return item.userId === item2.userId
+                    })
+                })
+            },
+            addMember (item) {
+                let str = ''
+                let nowChat
+                this.chatHistory.member.length > 2 ? str = 'add' : str = 'set'
+                if (str === 'set') {
+                    this.getUserInfo.friends.forEach(item => {
+                        if (item.chatId === this.nowChat.chatId) {
+                            nowChat = this.nowChat
+                            nowChat.userId = item.userId
+                        }
+                    })
+                }
+                this.setGroup({
+                    str,
+                    item,
+                    nowChat
+                })
             }
         }
     }
@@ -153,6 +196,18 @@
                   font-size: 12px;
                   margin-left: -8px;
                   vertical-align: middle;
+                }
+              }
+            }
+          }
+
+          > .addFriend {
+            > ul {
+              > li {
+                cursor: pointer;
+                background-color: #ddd;
+                &:hover {
+                  background-color: #aaa;
                 }
               }
             }

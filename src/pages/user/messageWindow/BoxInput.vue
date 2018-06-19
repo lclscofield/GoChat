@@ -2,8 +2,15 @@
     <div id="boxInput">
         <!-- 工具栏 -->
         <div class="toolbar">
-            <a href="javascript:;"
-               title="表情"></a>
+            <!-- <a href="javascript:;"
+               title="表情"></a> -->
+            <!-- <input type="file"
+                   accept="image/*"
+                   name="file"
+                   id="file"
+                   class="input-file">
+            <label for="file"
+                   class='btn-input-file'>Choose a image</label> -->
         </div>
         <!-- 输入框 -->
         <div class="content">
@@ -93,7 +100,8 @@
       left: 0;
 
       > .toolbar {
-        height: 40px;
+        // height: 40px;
+        height: 10px;
         padding: 5px 17px;
 
         > a {
@@ -103,6 +111,17 @@
           height: 30px;
           background: url("//res.wx.qq.com/a/wx_fed/webwx/res/static/img/1OvE4o2.png")
             0 -805px;
+        }
+
+        > .input-file {
+          position:absolute;clip:rect(0 0 0 0);
+        }
+
+        > .btn-input-file {
+            background: rgb(96, 186, 221);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
         }
       }
 

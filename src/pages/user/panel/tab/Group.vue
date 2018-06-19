@@ -113,6 +113,10 @@
             border-bottom: 1px solid #9bb8ee;
             cursor: pointer;
 
+            &:hover {
+              background: #7fa7f1;
+            }
+
             > .avatar {
               float: left;
               margin-right: 10px;

@@ -113,3 +113,27 @@ export const addFriend = ({ commit, state }, postData) => {
         })
     })
 }
+
+// 添加群组成员
+export const setGroup = ({ commit, state }, postData) => {
+    return new Promise((resolve, reject) => {
+        http({
+            method: 'post',
+            url: '/api/setGroup',
+            params: {
+                id: state.userInfo._id
+            },
+            data: postData
+        }).then((res) => {
+            console.log(res.data)
+            let user = state.userInfo
+            user.groups = res.data.groups
+            commit('setUserInfo', user)
+            sessionStorage.setItem('userInfo', JSON.stringify(res.data))
+            resolve(res.data)
+        }).catch((err) => {
+            console.log(err)
+            reject(err)
+        })
+    })
+}
